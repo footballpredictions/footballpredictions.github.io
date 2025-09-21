@@ -100,57 +100,83 @@ document.head.appendChild(style);
 
 // Дополнительные эффекты при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
-    // Добавляем эффект частиц в фоне
-    createParticleEffect();
+    // Добавляем эффект спортивных элементов в фоне
+    createSportsEffect();
     
     // Добавляем звуковой эффект (опционально)
     addSoundEffects();
 });
 
-// Создание эффекта частиц
-function createParticleEffect() {
+// Создание эффекта спортивных элементов
+function createSportsEffect() {
     const container = document.querySelector('.container');
     
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.cssText = `
+    // Массив спортивных элементов
+    const sportsElements = [
+        { emoji: '⚽', name: 'football' },
+        { emoji: '🏆', name: 'trophy' },
+        { emoji: '🥅', name: 'goal' },
+        { emoji: '🏟️', name: 'stadium' },
+        { emoji: '⚽', name: 'soccer-ball' },
+        { emoji: '🏃', name: 'runner' },
+        { emoji: '🏅', name: 'medal' },
+        { emoji: '🥇', name: 'gold-medal' },
+        { emoji: '🏃‍♂️', name: 'runner-man' },
+        { emoji: '⚽', name: 'ball' },
+        { emoji: '🏆', name: 'cup' },
+        { emoji: '🥅', name: 'net' }
+    ];
+    
+    for (let i = 0; i < 15; i++) {
+        const sportElement = document.createElement('div');
+        const randomSport = sportsElements[Math.floor(Math.random() * sportsElements.length)];
+        
+        sportElement.className = 'sport-element';
+        sportElement.innerHTML = randomSport.emoji;
+        sportElement.style.cssText = `
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
+            font-size: ${20 + Math.random() * 15}px;
+            color: rgba(255, 255, 255, 0.8);
             pointer-events: none;
-            animation: float ${3 + Math.random() * 4}s linear infinite;
+            animation: sportFloat ${4 + Math.random() * 6}s linear infinite;
             left: ${Math.random() * 100}%;
             top: ${Math.random() * 100}%;
-            animation-delay: ${Math.random() * 2}s;
+            animation-delay: ${Math.random() * 3}s;
+            z-index: 1;
         `;
         
-        container.appendChild(particle);
+        container.appendChild(sportElement);
     }
     
-    // Добавляем CSS для анимации частиц
-    const particleStyle = document.createElement('style');
-    particleStyle.textContent = `
-        @keyframes float {
+    // Добавляем CSS для анимации спортивных элементов
+    const sportStyle = document.createElement('style');
+    sportStyle.textContent = `
+        @keyframes sportFloat {
             0% {
-                transform: translateY(100vh) rotate(0deg);
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
                 opacity: 0;
             }
             10% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            50% {
                 opacity: 1;
             }
             90% {
-                opacity: 1;
+                opacity: 0.8;
             }
             100% {
-                transform: translateY(-100vh) rotate(360deg);
+                transform: translateY(-100vh) rotate(360deg) scale(0.5);
                 opacity: 0;
             }
         }
+        
+        .sport-element {
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
     `;
-    document.head.appendChild(particleStyle);
+    document.head.appendChild(sportStyle);
 }
 
 // Звуковые эффекты (опционально)

@@ -284,24 +284,34 @@ body {
     }
 }
 
-/* Дополнительные эффекты */
-.splash-screen::before {
-    content: '';
+/* Спортивные элементы в фоне */
+.sport-element {
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-    animation: shimmer 4s ease-in-out infinite;
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.8);
     pointer-events: none;
+    z-index: 1;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+    animation: sportFloat 6s linear infinite;
 }
 
-@keyframes shimmer {
-    0%, 100% {
-        transform: rotate(0deg);
+@keyframes sportFloat {
+    0% {
+        transform: translateY(100vh) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+        transform: scale(1);
     }
     50% {
-        transform: rotate(180deg);
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg) scale(0.5);
+        opacity: 0;
     }
 }
