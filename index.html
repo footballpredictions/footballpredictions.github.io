@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Predictions - Футбольные прогнозы</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="splash-screen">
+            <!-- Анимированный футбольный мяч -->
+            <div class="football-ball">
+                <div class="ball">
+                    <div class="ball-pattern">
+                        <div class="hexagon"></div>
+                        <div class="hexagon"></div>
+                        <div class="hexagon"></div>
+                        <div class="hexagon"></div>
+                        <div class="hexagon"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Заголовок приложения -->
+            <h1 class="app-title">Футбольные прогнозы</h1>
+            <p class="app-subtitle">Football Predictions</p>
+            
+            <!-- Кнопка скачивания -->
+            <div class="download-section">
+                <button class="download-btn" onclick="downloadApp()">
+                    <span class="download-icon">📱</span>
+                    Скачать приложение
+                </button>
+                <p class="version-info">Версия 2.0.2</p>
+            </div>
+            
+            <!-- Дополнительная информация -->
+            <div class="app-info">
+                <div class="feature">
+                    <span class="feature-icon">⚽</span>
+                    <span>Точные прогнозы</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">📊</span>
+                    <span>Статистика матчей</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🏆</span>
+                    <span>Анализ команд</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
