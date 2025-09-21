@@ -224,16 +224,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     ball.addEventListener('mouseenter', function() {
         this.style.boxShadow = `
-            0 10px 30px rgba(0, 0, 0, 0.3),
-            inset 0 5px 15px rgba(255, 255, 255, 0.8),
-            0 0 50px rgba(255, 255, 255, 0.5)
+            0 15px 35px rgba(0, 0, 0, 0.4),
+            inset 0 8px 20px rgba(255, 255, 255, 0.9),
+            0 0 0 3px #000,
+            0 0 60px rgba(255, 255, 255, 0.6)
         `;
     });
     
     ball.addEventListener('mouseleave', function() {
         this.style.boxShadow = `
-            0 10px 30px rgba(0, 0, 0, 0.3),
-            inset 0 5px 15px rgba(255, 255, 255, 0.8)
+            0 15px 35px rgba(0, 0, 0, 0.4),
+            inset 0 8px 20px rgba(255, 255, 255, 0.9),
+            0 0 0 3px #000
         `;
     });
 });

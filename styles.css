@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -50,14 +50,15 @@ body {
 .ball {
     width: 120px;
     height: 120px;
-    background: linear-gradient(45deg, #ffffff 0%, #f0f0f0 100%);
+    background: linear-gradient(45deg, #ffffff 0%, #f8f8f8 100%);
     border-radius: 50%;
     position: relative;
     margin: 0 auto;
     box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.3),
-        inset 0 5px 15px rgba(255, 255, 255, 0.8);
-    animation: rotate 3s linear infinite;
+        0 15px 35px rgba(0, 0, 0, 0.4),
+        inset 0 8px 20px rgba(255, 255, 255, 0.9),
+        0 0 0 3px #000;
+    animation: rotate 2.5s linear infinite;
 }
 
 .ball-pattern {
@@ -71,38 +72,39 @@ body {
 
 .hexagon {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     background: #000;
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border: 1px solid #333;
 }
 
 .hexagon:nth-child(1) {
-    top: 20%;
-    left: 30%;
+    top: 15%;
+    left: 25%;
     animation: pulse 2s infinite;
 }
 
 .hexagon:nth-child(2) {
-    top: 20%;
-    right: 30%;
+    top: 15%;
+    right: 25%;
     animation: pulse 2s infinite 0.2s;
 }
 
 .hexagon:nth-child(3) {
-    top: 50%;
-    left: 20%;
+    top: 45%;
+    left: 15%;
     animation: pulse 2s infinite 0.4s;
 }
 
 .hexagon:nth-child(4) {
-    top: 50%;
-    right: 20%;
+    top: 45%;
+    right: 15%;
     animation: pulse 2s infinite 0.6s;
 }
 
 .hexagon:nth-child(5) {
-    bottom: 20%;
+    bottom: 15%;
     left: 50%;
     transform: translateX(-50%);
     animation: pulse 2s infinite 0.8s;
@@ -176,8 +178,8 @@ body {
 }
 
 .download-btn {
-    background: linear-gradient(45deg, #ff6b35, #f7931e);
-    color: white;
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #2E7D32;
     border: none;
     padding: 15px 40px;
     font-size: 1.2rem;
@@ -185,7 +187,7 @@ body {
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -193,8 +195,8 @@ body {
 
 .download-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(255, 107, 53, 0.4);
-    background: linear-gradient(45deg, #ff7b45, #ffa31e);
+    box-shadow: 0 12px 35px rgba(255, 215, 0, 0.5);
+    background: linear-gradient(45deg, #FFE55C, #FFB347);
 }
 
 .download-btn:active {
