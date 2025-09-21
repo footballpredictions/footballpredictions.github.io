@@ -218,24 +218,26 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Добавляем эффект свечения для мяча при наведении
+// Добавляем эффект свечения для изображения мяча при наведении
 document.addEventListener('DOMContentLoaded', function() {
-    const ball = document.querySelector('.ball');
+    const ballImage = document.querySelector('.ball-image');
     
-    ball.addEventListener('mouseenter', function() {
-        this.style.boxShadow = `
-            0 15px 35px rgba(0, 0, 0, 0.4),
-            inset 0 8px 20px rgba(255, 255, 255, 0.9),
-            0 0 0 3px #000,
-            0 0 60px rgba(255, 255, 255, 0.6)
-        `;
-    });
-    
-    ball.addEventListener('mouseleave', function() {
-        this.style.boxShadow = `
-            0 15px 35px rgba(0, 0, 0, 0.4),
-            inset 0 8px 20px rgba(255, 255, 255, 0.9),
-            0 0 0 3px #000
-        `;
-    });
+    if (ballImage) {
+        ballImage.addEventListener('mouseenter', function() {
+            this.style.boxShadow = `
+                0 25px 50px rgba(0, 0, 0, 0.6),
+                0 0 0 2px rgba(255, 255, 255, 0.5),
+                0 0 80px rgba(255, 255, 255, 0.7)
+            `;
+            this.style.transform = 'scale(1.05)';
+        });
+        
+        ballImage.addEventListener('mouseleave', function() {
+            this.style.boxShadow = `
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                0 0 0 2px rgba(255, 255, 255, 0.3)
+            `;
+            this.style.transform = 'scale(1)';
+        });
+    }
 });
