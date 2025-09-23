@@ -13,29 +13,28 @@ body {
 	align-items: center;
 	justify-content: center;
 	overflow-x: hidden;
-	overflow-y: auto; /* позволяем прокрутку по вертикали */
+	overflow-y: auto;
 }
 
 .container {
 	width: 100%;
-	min-height: 100vh; /* вместо фиксированной высоты */
+	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	position: relative;
-	padding: 16px; /* безопасные отступы, чтобы контент не прилипал к краям */
 }
 
-/* SVG-разметка футбольного поля */
+/* Поле во весь экран с физическим отступом 0.5мм со всех сторон */
 .field-overlay {
-	position: fixed; /* фиксируем фон, чтобы не влиял на поток и высоту */
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+	position: fixed;
+	top: 0.5mm;
+	left: 0.5mm;
+	right: 0.5mm;
+	bottom: 0.5mm;
 	pointer-events: none;
 	z-index: 0;
-	opacity: 0.45; /* чуть более приглушенно */
+	opacity: 0.45;
 }
 
 .field-svg {
@@ -44,11 +43,8 @@ body {
 	display: block;
 }
 
-/* Сделаем линии поля заметнее на любых экранах */
-.field-svg * {
-	vector-effect: non-scaling-stroke;
-	stroke-width: 0.8;
-}
+/* Линии поля читаемые */
+.field-svg * { vector-effect: non-scaling-stroke; stroke-width: 0.8; }
 
 /* Контент поверх поля */
 .splash-screen {
@@ -59,181 +55,41 @@ body {
 	z-index: 1;
 	max-width: 1200px;
 	width: 100%;
-	padding: 24px 16px; /* отступы для безопасности в портрете */
+	padding: 24px 16px;
 }
 
-/* Анимация появления */
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(30px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(30px);} to { opacity: 1; transform: translateY(0);} }
 
-/* Футбольный мяч */
-.football-ball {
-	margin-bottom: 32px;
-	animation: bounce 2s infinite ease-in-out;
-}
+/* Мяч */
+.football-ball { margin-bottom: 32px; animation: bounce 2s infinite ease-in-out; }
 
-.ball-image {
-	width: 120px;
-	height: 120px;
-	border-radius: 50%;
-	margin: 0 auto;
-	display: block;
-	box-shadow: 
-		0 20px 40px rgba(0, 0, 0, 0.5),
-		0 0 0 2px rgba(255, 255, 255, 0.3);
-	animation: rotate 3s linear infinite;
-	transition: all 0.3s ease;
-}
+.ball-image { width: 120px; height: 120px; border-radius: 50%; margin: 0 auto; display: block; box-shadow: 0 20px 40px rgba(0,0,0,.5), 0 0 0 2px rgba(255,255,255,.3); animation: rotate 3s linear infinite; transition: all .3s ease; }
+.ball-image:hover { box-shadow: 0 25px 50px rgba(0,0,0,.6), 0 0 0 2px rgba(255,255,255,.5), 0 0 80px rgba(255,255,255,.7); transform: scale(1.05); }
 
-/* Эффект свечения для изображения мяча */
-.ball-image:hover {
-	box-shadow: 
-		0 25px 50px rgba(0, 0, 0, 0.6),
-		0 0 0 2px rgba(255, 255, 255, 0.5),
-		0 0 80px rgba(255, 255, 255, 0.7);
-	transform: scale(1.05);
-}
+.ball-fallback { width: 120px; height: 120px; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 80px; background: linear-gradient(135deg, #fff 0%, #f0f0f0 50%, #e8e8e8 100%); box-shadow: 0 20px 40px rgba(0,0,0,.5), 0 0 0 2px rgba(255,255,255,.3); animation: rotate 3s linear infinite; transition: all .3s ease; }
+.ball-fallback:hover { box-shadow: 0 25px 50px rgba(0,0,0,.6), 0 0 0 2px rgba(255,255,255,.5), 0 0 80px rgba(255,255,255,.7); transform: scale(1.05); }
 
-/* Резервный вариант с эмодзи мяча */
-.ball-fallback {
-	width: 120px;
-	height: 120px;
-	border-radius: 50%;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 80px;
-	background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #e8e8e8 100%);
-	box-shadow: 
-		0 20px 40px rgba(0, 0, 0, 0.5),
-		0 0 0 2px rgba(255, 255, 255, 0.3);
-	animation: rotate 3s linear infinite;
-	transition: all 0.3s ease;
-}
+@keyframes rotate { from { transform: rotate(0);} to { transform: rotate(360deg);} }
+@keyframes bounce { 0%,20%,50%,80%,100%{ transform: translateY(0);} 40%{ transform: translateY(-20px);} 60%{ transform: translateY(-10px);} }
 
-.ball-fallback:hover {
-	box-shadow: 
-		0 25px 50px rgba(0, 0, 0, 0.6),
-		0 0 0 2px rgba(255, 255, 255, 0.5),
-		0 0 80px rgba(255, 255, 255, 0.7);
-	transform: scale(1.05);
-}
+/* Заголовки и секции */
+.app-title { font-size: 3.2rem; font-weight: 700; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,.3); animation: slideInUp 1s ease-out .5s both; }
+.app-subtitle { font-size: 1.4rem; font-weight: 300; margin-bottom: 28px; opacity: .9; animation: slideInUp 1s ease-out .7s both; }
+@keyframes slideInUp { from { opacity: 0; transform: translateY(50px);} to { opacity: 1; transform: translateY(0);} }
 
-/* Анимации */
-@keyframes rotate {
-	from { transform: rotate(0deg); }
-	to { transform: rotate(360deg); }
-}
-
-@keyframes bounce {
-	0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-	40% { transform: translateY(-20px); }
-	60% { transform: translateY(-10px); }
-}
-
-/* Заголовки */
-.app-title {
-	font-size: 3.2rem;
-	font-weight: 700;
-	margin-bottom: 10px;
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-	animation: slideInUp 1s ease-out 0.5s both;
-}
-
-.app-subtitle {
-	font-size: 1.4rem;
-	font-weight: 300;
-	margin-bottom: 28px;
-	opacity: 0.9;
-	animation: slideInUp 1s ease-out 0.7s both;
-}
-
-@keyframes slideInUp {
-	from { opacity: 0; transform: translateY(50px); }
-	to { opacity: 1; transform: translateY(0); }
-}
-
-/* Секция скачивания */
-.download-section {
-	margin-bottom: 24px;
-	animation: slideInUp 1s ease-out 1s both;
-}
-
-.download-btn {
-	background: linear-gradient(45deg, #FFD700, #FFA500);
-	color: #2E7D32;
-	border: none;
-	padding: 14px 32px;
-	font-size: 1.1rem;
-	font-weight: 600;
-	border-radius: 50px;
-	cursor: pointer;
-	transition: all 0.3s ease;
-	box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-	display: inline-flex;
-	align-items: center;
-	gap: 10px;
-}
-
-.download-btn:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 12px 35px rgba(255, 215, 0, 0.5);
-	background: linear-gradient(45deg, #FFE55C, #FFB347);
-}
-
+.download-section { margin-bottom: 24px; animation: slideInUp 1s ease-out 1s both; }
+.download-btn { background: linear-gradient(45deg, #FFD700, #FFA500); color: #2E7D32; border: none; padding: 14px 32px; font-size: 1.1rem; font-weight: 600; border-radius: 50px; cursor: pointer; transition: all .3s ease; box-shadow: 0 8px 25px rgba(255,215,0,.4); display: inline-flex; align-items: center; gap: 10px; }
+.download-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(255,215,0,.5); background: linear-gradient(45deg, #FFE55C, #FFB347); }
 .download-btn:active { transform: translateY(-1px); }
-
 .download-icon { font-size: 1.5rem; }
+.version-info { margin-top: 10px; font-size: .9rem; opacity: .85; }
 
-.version-info {
-	margin-top: 10px;
-	font-size: 0.9rem;
-	opacity: 0.85;
-}
-
-/* Информация о приложении */
-.app-info {
-	display: flex;
-	justify-content: center;
-	gap: 24px;
-	flex-wrap: wrap; /* разрешаем перенос в ландшафте/портрете */
-	animation: slideInUp 1s ease-out 1.2s both;
-}
-
-.feature {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 6px;
-	opacity: 0.9;
-	transition: opacity 0.3s ease;
-	min-width: 120px;
-}
-
+.app-info { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; animation: slideInUp 1s ease-out 1.2s both; }
+.feature { display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: .9; transition: opacity .3s ease; min-width: 120px; }
 .feature:hover { opacity: 1; }
-
 .feature-icon { font-size: 1.8rem; }
+.feature span:last-child { font-size: .95rem; font-weight: 300; }
 
-.feature span:last-child { font-size: 0.95rem; font-weight: 300; }
-
-/* Desktop / ландшафт: поле на всю ширину, по центру по вертикали */
-@media (orientation: landscape) {
-	.field-overlay { left: 0; top: 50%; width: 100vw; height: auto; transform: translateY(-50%); }
-	.field-svg { width: 100vw; height: auto; }
-}
-
-/* Мобильный портрет: поле растянуть по ширине и высоте (разрешаем растяжение) */
-@media (orientation: portrait) {
-	.field-overlay { left: 50%; top: 50%; width: 100vw; height: 100vh; transform: translate(-50%, -50%) rotate(90deg); transform-origin: 50% 50%; }
-	.field-svg { width: 100vh; height: 100vw; }
-	.splash-screen { padding-bottom: 32px; }
-}
+/* Адаптивность */
+@media (max-width: 768px){ .app-title{ font-size: 2.2rem;} .app-subtitle{ font-size: 1.05rem;} .ball-image, .ball-fallback{ width: 96px; height: 96px;} .download-btn{ padding: 12px 24px; font-size: 1rem;} }
+@media (max-width: 480px){ .app-title{ font-size: 1.9rem;} .app-subtitle{ font-size: .95rem;} .ball-image, .ball-fallback{ width: 84px; height: 84px;} .download-btn{ padding: 10px 22px; font-size: .95rem;} }
