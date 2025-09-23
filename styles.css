@@ -25,23 +25,25 @@ body {
 	position: relative;
 }
 
-/* Поле во весь экран с физическим отступом 0.5мм со всех сторон */
+/* Поле во весь экран с физическим отступом только по ширине: 0.5мм слева/справа */
 .field-overlay {
 	position: fixed;
-	top: 0.5mm;
 	left: 0.5mm;
 	right: 0.5mm;
-	bottom: 0.5mm;
+	top: 50%;
+	bottom: auto;
 	pointer-events: none;
 	z-index: 0;
 	opacity: 0.45;
+	transform: translateY(-50%);
+	transform-origin: 50% 50%;
 }
 
 .field-svg {
-	width: 100%;
-	height: 100%;
 	display: block;
-	transform: none;           /* по умолчанию горизонтально (ПК/ландшафт) */
+	width: calc(100vw - 1mm);
+	height: auto;
+	transform: none; /* по умолчанию горизонтально */
 	transform-origin: 50% 50%;
 }
 
@@ -96,7 +98,8 @@ body {
 @media (max-width: 768px){ .app-title{ font-size: 2.2rem;} .app-subtitle{ font-size: 1.05rem;} .ball-image, .ball-fallback{ width: 96px; height: 96px;} .download-btn{ padding: 12px 24px; font-size: 1rem;} }
 @media (max-width: 480px){ .app-title{ font-size: 1.9rem;} .app-subtitle{ font-size: .95rem;} .ball-image, .ball-fallback{ width: 84px; height: 84px;} .download-btn{ padding: 10px 22px; font-size: .95rem;} }
 
-/* Портрет (мобильный): вертикальный вид поля */
+/* Портрет (мобильный): вертикальный вид поля, но сохраняем 0.5мм по ширине */
 @media (orientation: portrait){
-	.field-svg { transform: rotate(90deg); }
+	.field-overlay { left: 0.5mm; right: 0.5mm; top: 50%; transform: translateY(-50%); }
+	.field-svg { width: calc(100vw - 1mm); height: auto; transform: rotate(90deg); }
 }
