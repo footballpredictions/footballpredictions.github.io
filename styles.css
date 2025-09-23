@@ -114,10 +114,10 @@ body {
 
 .feature span:last-child { font-size: .95rem; font-weight: 300; }
 
-/* Портрет (мобильный): вертикальный вид поля, сохраняем 0.5vmin по ширине */
+/* Портрет (мобильный): НЕ вращаем поле, показываем центральную область */
 @media (orientation: portrait){
 	.field-overlay { left: 0.5vmin; right: 0.5vmin; top: 50%; transform: translateY(-50%); }
-	.field-svg { width: calc(100vw - 1vmin); height: auto; transform: rotate(90deg); }
+	.field-svg { width: calc(100vw - 1vmin); height: auto; transform: none; }
 	.app-title { font-size: 2.6rem; }
 }
 
