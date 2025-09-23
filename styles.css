@@ -33,13 +33,19 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.35;
+    opacity: 0.6;
 }
 
 .field-svg {
     width: 100%;
     height: 100%;
     display: block;
+}
+
+/* Сделаем линии поля заметнее на любых экранах */
+.field-svg * {
+    vector-effect: non-scaling-stroke;
+    stroke-width: 0.8;
 }
 
 /* Контент поверх поля */
