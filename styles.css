@@ -91,11 +91,11 @@ body {
 .app-info { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; animation: slideInUp 1s ease-out 1.2s both; }
 .feature { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; opacity: .9; transition: opacity .3s ease; min-width: 120px; }
 .feature:hover { opacity: 1; }
-/* Единый бокс иконки */
-.feature-icon { width: 36px; height: 36px; display: grid; place-items: center; font-size: 36px; line-height: 0; }
+/* Единый бокс иконки (по умолчанию 24x24) */
+.feature-icon { width: 24px; height: 24px; display: grid; place-items: center; font-size: 24px; line-height: 0; }
+/* Крупный вариант для Прогнозов */
+.feature-icon--large { width: 36px; height: 36px; font-size: 36px; }
 .feature-icon svg { width: 100%; height: 100%; display: block; }
-/* Принудительный размер 36x36 для иконки Прогнозы */
-.feature-icon .icon-36 { width: 36px; height: 36px; }
 
 .feature span:last-child { font-size: .95rem; font-weight: 300; }
 
