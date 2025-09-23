@@ -1,35 +1,83 @@
 // Функция для скачивания приложения
 function downloadApp() {
-    // Показываем уведомление о скачивании
-    showDownloadNotification();
-    
-    // Открываем страницу релиза в новой вкладке
-    const releaseUrl = 'https://github.com/footballpredictions/FootballAdminData/releases/tag/v2.0.2';
-    window.open(releaseUrl, '_blank');
-    
-    // Добавляем эффект нажатия на кнопку
-    const downloadBtn = document.querySelector('.download-btn');
-    downloadBtn.style.transform = 'scale(0.95)';
-    
-    setTimeout(() => {
-        downloadBtn.style.transform = '';
-    }, 150);
+	// Показываем уведомление о скачивании
+	showDownloadNotification('Идет подготовка загрузки...');
+
+	// Если уже знаем актуальную ссылку на APK — качаем сразу
+	if (window.__latestApkUrl) {
+		triggerDirectDownload(window.__latestApkUrl);
+		return;
+	}
+
+	// Иначе пытаемся получить последнюю ссылку из GitHub Releases
+	fetchLatestApkUrl()
+		.then((apkUrl) => {
+			if (apkUrl) {
+				triggerDirectDownload(apkUrl);
+			} else {
+				// Фолбэк на фиксированную версию
+				triggerDirectDownload('https://github.com/footballpredictions/FootballAdminData/releases/download/v2.0.2/FootballPredictions-release.apk');
+			}
+		})
+		.catch(() => {
+			triggerDirectDownload('https://github.com/footballpredictions/FootballAdminData/releases/download/v2.0.2/FootballPredictions-release.apk');
+		});
+}
+
+function triggerDirectDownload(url) {
+	showDownloadNotification('Загрузка APK начнется сейчас...');
+	const downloadBtn = document.querySelector('.download-btn');
+	if (downloadBtn) {
+		downloadBtn.style.transform = 'scale(0.95)';
+		setTimeout(() => { downloadBtn.style.transform = ''; }, 150);
+	}
+	// Прямой переход на файл APK
+	window.location.href = url;
+}
+
+// Получение последнего релиза и ссылки на APK
+async function fetchLatestApkUrl() {
+	try {
+		const res = await fetch('https://api.github.com/repos/footballpredictions/FootballAdminData/releases/latest', {
+			headers: { 'Accept': 'application/vnd.github+json' }
+		});
+		if (!res.ok) throw new Error('Failed to fetch latest release');
+		const data = await res.json();
+		// Ищем asset c расширением .apk
+		const apkAsset = Array.isArray(data.assets) ? data.assets.find(a => typeof a.browser_download_url === 'string' && a.browser_download_url.toLowerCase().endsWith('.apk')) : null;
+		if (apkAsset && apkAsset.browser_download_url) {
+			window.__latestApkUrl = apkAsset.browser_download_url;
+			window.__latestVersionTag = data.tag_name || '';
+			updateVersionLabel(window.__latestVersionTag);
+			return window.__latestApkUrl;
+		}
+		return null;
+	} catch (e) {
+		return null;
+	}
+}
+
+function updateVersionLabel(tag) {
+	if (!tag) return;
+	const el = document.querySelector('.version-info');
+	if (el) {
+		el.textContent = `Версия ${tag}`;
+	}
 }
 
 // Показ уведомления о скачивании
-function showDownloadNotification() {
-    // Создаем элемент уведомления
-    const notification = document.createElement('div');
-    notification.className = 'download-notification';
-    notification.innerHTML = `
+function showDownloadNotification(text) {
+	// Создаем элемент уведомления
+	const notification = document.createElement('div');
+	notification.className = 'download-notification';
+	notification.innerHTML = `
         <div class="notification-content">
             <span class="notification-icon">📱</span>
-            <span class="notification-text">Переход к странице загрузки...</span>
+            <span class="notification-text">${text || 'Переход к странице загрузки...'}</span>
         </div>
     `;
-    
-    // Добавляем стили для уведомления
-    notification.style.cssText = `
+	// Добавляем стили для уведомления
+	notification.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
@@ -42,19 +90,17 @@ function showDownloadNotification() {
         animation: slideInRight 0.5s ease-out;
         font-family: 'Roboto', sans-serif;
     `;
-    
-    // Добавляем уведомление на страницу
-    document.body.appendChild(notification);
-    
-    // Удаляем уведомление через 3 секунды
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.5s ease-in';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 500);
-    }, 3000);
+	// Добавляем уведомление на страницу
+	document.body.appendChild(notification);
+	// Удаляем уведомление через 3 секунды
+	setTimeout(() => {
+		notification.style.animation = 'slideOutRight 0.5s ease-in';
+		setTimeout(() => {
+			if (notification.parentNode) {
+				notification.parentNode.removeChild(notification);
+			}
+		}, 500);
+	}, 3000);
 }
 
 // Добавляем CSS анимации для уведомлений
