@@ -76,31 +76,25 @@ body {
 @keyframes fadeIn { from { opacity: 0; transform: translateY(30px);} to { opacity: 1; transform: translateY(0);} }
 
 /* Мяч */
-.football-ball { margin-bottom: 32px; animation: bounce 2s infinite ease-in-out; position: relative; }
+.football-ball { margin-bottom: 32px; animation: bounce 2s infinite ease-in-out; }
 
 .ball-image {
-	width: 280px;
+	width: 120px;
 	aspect-ratio: 1 / 1;
 	height: auto;
 	object-fit: cover;
 	border-radius: 50%;
 	margin: 0 auto;
 	display: block;
-	position: relative;
-	z-index: 1;
-	/* компактная тень вокруг мяча */
-	box-shadow: 0 6px 12px rgba(0,0,0,.45);
-	/* внутренний круг: диаметр 50% от мяча за счёт отрицательного отступа */
-	outline: 2px solid rgba(255,255,255,.75);
-	outline-offset: -70px; /* 280/2/2 = 70 */
+	box-shadow: 0 20px 40px rgba(0,0,0,.5), 0 0 0 2px rgba(255,255,255,.3);
 	animation: rotate 3s linear infinite;
 	transition: all .3s ease;
 }
 
-.ball-image:hover { box-shadow: 0 8px 18px rgba(0,0,0,.55); transform: scale(1.05); }
+.ball-image:hover { box-shadow: 0 25px 50px rgba(0,0,0,.6), 0 0 0 2px rgba(255,255,255,.5), 0 0 80px rgba(255,255,255,.7); transform: scale(1.05); }
 
-.ball-fallback { width: 280px; aspect-ratio: 1 / 1; height: auto; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 168px; background: linear-gradient(135deg, #fff 0%, #f0f0f0 50%, #e8e8e8 100%); box-shadow: 0 6px 12px rgba(0,0,0,.45); animation: rotate 3s linear infinite; transition: all .3s ease; position: relative; z-index: 1; outline: 2px solid rgba(255,255,255,.75); outline-offset: -70px; }
-.ball-fallback:hover { box-shadow: 0 8px 18px rgba(0,0,0,.55); transform: scale(1.05); }
+.ball-fallback { width: 120px; aspect-ratio: 1 / 1; height: auto; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 80px; background: linear-gradient(135deg, #fff 0%, #f0f0f0 50%, #e8e8e8 100%); box-shadow: 0 20px 40px rgba(0,0,0,.5), 0 0 0 2px rgba(255,255,255,.3); animation: rotate 3s linear infinite; transition: all .3s ease; }
+.ball-fallback:hover { box-shadow: 0 25px 50px rgba(0,0,0,.6), 0 0 0 2px rgba(255,255,255,.5), 0 0 80px rgba(255,255,255,.7); transform: scale(1.05); }
 
 @keyframes rotate { from { transform: rotate(0);} to { transform: rotate(360deg);} }
 @keyframes bounce { 0%,20%,50%,80%,100%{ transform: translateY(0);} 40%{ transform: translateY(-20px);} 60%{ transform: translateY(-10px);} }
@@ -137,14 +131,6 @@ body {
 	.field-overlay { left: 0.5vmin; right: 0.5vmin; top: 50%; transform: translateY(-50%); }
 	.field-svg { width: calc(100vw - 1vmin); height: auto; transform: none; }
 	.app-title { font-size: 2.6rem; }
-	.ball-image, .ball-fallback { width: 220px; }
-	/* 220px => половина 110, половина-разницы 55 */
-	.ball-image, .ball-fallback { outline-offset: -55px; }
 }
 
-@media (max-width: 480px){
-	.app-title{ font-size: 2.2rem;}
-	.ball-image, .ball-fallback{ width: 180px; }
-	/* 180px => половина 90, половина-разницы 45 */
-	.ball-image, .ball-fallback { outline-offset: -45px; }
-}
+@media (max-width: 480px){ .app-title{ font-size: 2.2rem;} }
