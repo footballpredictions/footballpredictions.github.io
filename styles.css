@@ -77,7 +77,7 @@ body {
 @keyframes bounce { 0%,20%,50%,80%,100%{ transform: translateY(0);} 40%{ transform: translateY(-20px);} 60%{ transform: translateY(-10px);} }
 
 /* Заголовки и секции */
-.app-title { font-size: 3.2rem; font-weight: 700; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,.3); animation: slideInUp 1s ease-out .5s both; }
+.app-title { font-family: Impact, 'Arial Black', system-ui, sans-serif; letter-spacing: 0.5px; font-size: 3.2rem; font-weight: 700; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,.3); animation: slideInUp 1s ease-out .5s both; }
 .app-subtitle { font-size: 1.4rem; font-weight: 300; margin-bottom: 28px; opacity: .9; animation: slideInUp 1s ease-out .7s both; }
 @keyframes slideInUp { from { opacity: 0; transform: translateY(50px);} to { opacity: 1; transform: translateY(0);} }
 
@@ -102,4 +102,5 @@ body {
 @media (orientation: portrait){
 	.field-overlay { left: 0.5vmin; right: 0.5vmin; top: 50%; transform: translateY(-50%); }
 	.field-svg { width: calc(100vw - 1vmin); height: auto; transform: rotate(90deg); }
+	.app-title { font-size: 2.6rem; }
 }
