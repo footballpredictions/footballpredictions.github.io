@@ -89,10 +89,11 @@ body {
 .version-info { margin-top: 10px; font-size: .9rem; opacity: .85; }
 
 .app-info { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; animation: slideInUp 1s ease-out 1.2s both; }
-.feature { display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: .9; transition: opacity .3s ease; min-width: 120px; }
+.feature { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; opacity: .9; transition: opacity .3s ease; min-width: 120px; }
 .feature:hover { opacity: 1; }
-.feature-icon { font-size: 1.8rem; }
-.feature-icon svg { width: 1em; height: 1em; display: inline-block; }
+/* Единый бокс иконки */
+.feature-icon { width: 36px; height: 36px; display: grid; place-items: center; font-size: 36px; line-height: 0; }
+.feature-icon svg { width: 100%; height: 100%; display: block; }
 /* Принудительный размер 36x36 для иконки Прогнозы */
 .feature-icon .icon-36 { width: 36px; height: 36px; }
 
