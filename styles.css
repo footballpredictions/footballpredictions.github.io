@@ -41,7 +41,7 @@ body {
 	width: 100%;
 	height: 100%;
 	display: block;
-	transform: rotate(90deg);
+	transform: none;           /* по умолчанию горизонтально (ПК/ландшафт) */
 	transform-origin: 50% 50%;
 }
 
@@ -95,3 +95,8 @@ body {
 /* Адаптивность */
 @media (max-width: 768px){ .app-title{ font-size: 2.2rem;} .app-subtitle{ font-size: 1.05rem;} .ball-image, .ball-fallback{ width: 96px; height: 96px;} .download-btn{ padding: 12px 24px; font-size: 1rem;} }
 @media (max-width: 480px){ .app-title{ font-size: 1.9rem;} .app-subtitle{ font-size: .95rem;} .ball-image, .ball-fallback{ width: 84px; height: 84px;} .download-btn{ padding: 10px 22px; font-size: .95rem;} }
+
+/* Портрет (мобильный): вертикальный вид поля */
+@media (orientation: portrait){
+	.field-svg { transform: rotate(90deg); }
+}
