@@ -12,53 +12,61 @@
     <div class="container">
         <div class="field-overlay" aria-hidden="true">
             <svg class="field-svg" viewBox="0 0 120 80" preserveAspectRatio="xMidYMid slice">
-                <!-- Поле: подложка со светлыми полосами -->
+                <!-- Маппинг размеров (прибл.): 105x68 м -> 116x76 юнитов (с отступом 2 со всех сторон) -->
                 <defs>
                     <linearGradient id="stripeLight" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stop-color="#ffffff" stop-opacity="0.06" />
                         <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02" />
                     </linearGradient>
                 </defs>
-                <!-- Полосы (7 горизонтальных) -->
-                <rect x="0" y="0" width="120" height="80" fill="none" />
-                <rect x="0" y="0" width="120" height="11.43" fill="url(#stripeLight)" />
-                <rect x="0" y="22.86" width="120" height="11.43" fill="url(#stripeLight)" />
-                <rect x="0" y="45.72" width="120" height="11.43" fill="url(#stripeLight)" />
-                <rect x="0" y="68.58" width="120" height="11.42" fill="url(#stripeLight)" />
+
+                <!-- Полосы газона (вертикальные) -->
+                <g opacity="0.18">
+                    <rect x="0" y="0" width="12" height="80" fill="url(#stripeLight)" />
+                    <rect x="24" y="0" width="12" height="80" fill="url(#stripeLight)" />
+                    <rect x="48" y="0" width="12" height="80" fill="url(#stripeLight)" />
+                    <rect x="72" y="0" width="12" height="80" fill="url(#stripeLight)" />
+                    <rect x="96" y="0" width="12" height="80" fill="url(#stripeLight)" />
+                </g>
+
+                <!-- Параметры -->
+                <!-- Отступ: m=2; внутреннее поле 116 x 76; центр (60,40) -->
+                <!-- Штрафная: depth_pa=18.3, height_pa=45.1; Вратарская: depth_ga=6.1, height_ga=20.5 -->
+                <!-- Точка пенальти: 12.2 от линии ворот; Центральный круг r=10.2; угловой радиус r=1.1 -->
 
                 <!-- Границы поля -->
-                <rect x="1" y="1" width="118" height="78" fill="none" stroke="white" />
+                <rect x="2" y="2" width="116" height="76" fill="none" stroke="white" />
 
                 <!-- Центральная линия, круг и точка -->
-                <line x1="60" y1="1" x2="60" y2="79" stroke="white" />
-                <circle cx="60" cy="40" r="9.15" fill="none" stroke="white" />
+                <line x1="60" y1="2" x2="60" y2="78" stroke="white" />
+                <circle cx="60" cy="40" r="10.2" fill="none" stroke="white" />
                 <circle cx="60" cy="40" r="0.6" fill="white" />
 
-                <!-- Штрафные площади (16.5 x 40.32) -->
-                <rect x="1" y="19.84" width="16.5" height="40.32" fill="none" stroke="white" />
-                <rect x="102.5" y="19.84" width="16.5" height="40.32" fill="none" stroke="white" />
-                
-                <!-- Вратарские площадки (5.5 x 18.32) -->
-                <rect x="1" y="30.84" width="5.5" height="18.32" fill="none" stroke="white" />
-                <rect x="113.5" y="30.84" width="5.5" height="18.32" fill="none" stroke="white" />
+                <!-- ЛЕВАЯ сторона: штрафная и вратарская -->
+                <!-- Штрафная (центрирована по вертикали) -->
+                <rect x="2" y="17.45" width="18.3" height="45.1" fill="none" stroke="white" />
+                <!-- Вратарская -->
+                <rect x="2" y="29.75" width="6.1" height="20.5" fill="none" stroke="white" />
+                <!-- Точка пенальти и дуга -->
+                <circle cx="14.2" cy="40" r="0.6" fill="white" />
+                <!-- Дуга пенальти (вне штрафной) -->
+                <path d="M 14.2 29.8 A 10.2 10.2 0 0 1 14.2 50.2" fill="none" stroke="white" />
 
-                <!-- Точки пенальти -->
-                <circle cx="11" cy="40" r="0.6" fill="white" />
-                <circle cx="109" cy="40" r="0.6" fill="white" />
+                <!-- ПРАВАЯ сторона: штрафная и вратарская -->
+                <rect x="99.7" y="17.45" width="18.3" height="45.1" fill="none" stroke="white" />
+                <rect x="111.9" y="29.75" width="6.1" height="20.5" fill="none" stroke="white" />
+                <circle cx="105.8" cy="40" r="0.6" fill="white" />
+                <path d="M 105.8 50.2 A 10.2 10.2 0 0 1 105.8 29.8" fill="none" stroke="white" />
 
-                <!-- Дуги у линии штрафной (упрощённые окружности с малой прозрачностью) -->
-                <circle cx="11" cy="40" r="9.15" fill="none" stroke="white" opacity="0.7" stroke-dasharray="12 999" />
-                <circle cx="109" cy="40" r="9.15" fill="none" stroke="white" opacity="0.7" stroke-dasharray="12 999" />
+                <!-- Угловые дуги (r≈1.1) -->
+                <path d="M2,3.1 a1.1,1.1 0 0 0 1.1,-1.1" stroke="white" fill="none" />
+                <path d="M118,3.1 a1.1,1.1 0 0 1 -1.1,-1.1" stroke="white" fill="none" />
+                <path d="M2,76.9 a1.1,1.1 0 0 1 1.1,1.1" stroke="white" fill="none" />
+                <path d="M118,76.9 a1.1,1.1 0 0 0 -1.1,1.1" stroke="white" fill="none" />
 
-                <!-- Угловые сектора (радиус ~1) -->
-                <path d="M1,2 a1,1 0 0 0 1,-1" stroke="white" fill="none" />
-                <path d="M119,2 a1,1 0 0 1 -1,-1" stroke="white" fill="none" />
-                <path d="M1,78 a1,1 0 0 1 1,1" stroke="white" fill="none" />
-                <path d="M119,78 a1,1 0 0 0 -1,1" stroke="white" fill="none" />
-
-                <!-- Ворота (небольшие прямоугольники за линией ворот) -->
-                <rect x="-1" y="36.5" width="2" height="7" fill="none" stroke="white" />
-                <rect x="119" y="36.5" width="2" height="7" fill="none" stroke="white" />
+                <!-- Ворота за линией ворот (тонкие) -->
+                <rect x="0" y="36.5" width="2" height="7" fill="none" stroke="white" />
+                <rect x="118" y="36.5" width="2" height="7" fill="none" stroke="white" />
             </svg>
         </div>
         <div class="splash-screen">
