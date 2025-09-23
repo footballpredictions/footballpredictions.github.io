@@ -234,4 +234,10 @@ body {
     .download-btn { padding: 10px 24px; font-size: 0.95rem; }
 }
 
-/* Спортивные элементы ранее заменены на SVG-поле */
+/* Портретная ориентация: вертикальное поле */
+@media (orientation: portrait) {
+    .field-overlay {
+        transform: rotate(90deg);
+        transform-origin: 50% 50%;
+    }
+}
