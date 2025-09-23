@@ -237,7 +237,26 @@ body {
 /* Портретная ориентация: вертикальное поле */
 @media (orientation: portrait) {
     .field-overlay {
-        transform: rotate(90deg);
+        left: 50%;
+        top: 50%;
+        width: 100vh; /* меняем местами ширину/высоту */
+        height: 100vw;
+        transform: translate(-50%, -50%) rotate(90deg);
         transform-origin: 50% 50%;
+    }
+    .field-svg {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/* Ландшафтная ориентация: сброс к дефолту */
+@media (orientation: landscape) {
+    .field-overlay {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        transform: none;
     }
 }
