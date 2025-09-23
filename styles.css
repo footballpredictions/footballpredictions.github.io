@@ -4,7 +4,7 @@
 	src: local('Impact'),
 		 url('fonts/impact.woff2') format('woff2'),
 		 url('fonts/impact.woff') format('woff');
-	font-weight: normal;
+	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
 }
@@ -88,7 +88,7 @@ body {
 @keyframes bounce { 0%,20%,50%,80%,100%{ transform: translateY(0);} 40%{ transform: translateY(-20px);} 60%{ transform: translateY(-10px);} }
 
 /* Заголовки и секции */
-.app-title { font-family: 'Impact Local', Impact, 'Anton', 'Arial Black', system-ui, sans-serif; letter-spacing: 0.5px; text-transform: uppercase; font-size: 3.2rem; font-weight: 700; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,.3); animation: slideInUp 1s ease-out .5s both; }
+.app-title { font-family: 'Impact Local', Impact, 'Anton', 'Arial Black', system-ui, sans-serif; letter-spacing: 0.5px; text-transform: uppercase; font-size: 3.2rem; font-weight: 400; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,.3); animation: slideInUp 1s ease-out .5s both; }
 .app-subtitle { font-size: 1.4rem; font-weight: 300; margin-bottom: 28px; opacity: .9; animation: slideInUp 1s ease-out .7s both; }
 @keyframes slideInUp { from { opacity: 0; transform: translateY(50px);} to { opacity: 1; transform: translateY(0);} }
 
