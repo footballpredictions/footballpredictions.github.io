@@ -245,8 +245,8 @@ body {
 	.field-overlay {
 		left: 50%;
 		top: 50%;
-		width: 100vh; /* меняем местами ширину/высоту */
-		height: 100vw;
+		width: 100%;
+		height: 100%;
 		transform: translate(-50%, -50%) rotate(90deg);
 		transform-origin: 50% 50%;
 	}
