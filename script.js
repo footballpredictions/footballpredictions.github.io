@@ -16,11 +16,11 @@ function downloadApp() {
 				triggerDirectDownload(apkUrl);
 			} else {
 				// Фолбэк на фиксированную версию
-				triggerDirectDownload('https://github.com/footballpredictions/FootballAdminData/releases/download/v2.0.2/FootballPredictions-release.apk');
+				triggerDirectDownload('https://github.com/footballpredictions/footballpredictions.github.io/releases/download/v2.0.2/FootballPredictions-release.apk');
 			}
 		})
 		.catch(() => {
-			triggerDirectDownload('https://github.com/footballpredictions/FootballAdminData/releases/download/v2.0.2/FootballPredictions-release.apk');
+			triggerDirectDownload('https://github.com/footballpredictions/footballpredictions.github.io/releases/download/v2.0.2/FootballPredictions-release.apk');
 		});
 }
 
