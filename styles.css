@@ -93,6 +93,9 @@ body {
 .feature:hover { opacity: 1; }
 .feature-icon { font-size: 1.8rem; }
 .feature-icon svg { width: 1em; height: 1em; display: inline-block; }
+/* Принудительный размер 36x36 для иконки Прогнозы */
+.feature-icon .icon-36 { width: 36px; height: 36px; }
+
 .feature span:last-child { font-size: .95rem; font-weight: 300; }
 
 /* Портрет (мобильный): вертикальный вид поля, сохраняем 0.5vmin по ширине */
