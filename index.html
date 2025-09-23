@@ -10,6 +10,36 @@
 </head>
 <body>
     <div class="container">
+        <div class="field-overlay" aria-hidden="true">
+            <svg class="field-svg" viewBox="0 0 120 80" preserveAspectRatio="xMidYMid meet">
+                <!-- Поле -->
+                <rect x="1" y="1" width="118" height="78" fill="none" stroke="white" opacity="0.7" />
+                <!-- Центральная линия -->
+                <line x1="60" y1="1" x2="60" y2="79" stroke="white" opacity="0.7" />
+                <!-- Центральный круг и точка -->
+                <circle cx="60" cy="40" r="9.15" fill="none" stroke="white" opacity="0.7" />
+                <circle cx="60" cy="40" r="0.6" fill="white" />
+                <!-- Штрафные площади -->
+                <rect x="1" y="18" width="16.5" height="44" fill="none" stroke="white" opacity="0.7" />
+                <rect x="102.5" y="18" width="16.5" height="44" fill="none" stroke="white" opacity="0.7" />
+                <!-- Вратарские площадки -->
+                <rect x="1" y="30" width="5.5" height="20" fill="none" stroke="white" opacity="0.7" />
+                <rect x="113.5" y="30" width="5.5" height="20" fill="none" stroke="white" opacity="0.7" />
+                <!-- Точки пенальти -->
+                <circle cx="11" cy="40" r="0.6" fill="white" />
+                <circle cx="109" cy="40" r="0.6" fill="white" />
+                <!-- Дуги у линии штрафной -->
+                <path d="M20 40 a9.15 9.15 0 0 0 9.15 -9.15" stroke="white" fill="none" opacity="0.7" />
+                <path d="M20 40 a9.15 9.15 0 0 1 9.15 9.15" stroke="white" fill="none" opacity="0.7" />
+                <path d="M100 40 a9.15 9.15 0 0 1 -9.15 -9.15" stroke="white" fill="none" opacity="0.7" />
+                <path d="M100 40 a9.15 9.15 0 0 0 -9.15 9.15" stroke="white" fill="none" opacity="0.7" />
+                <!-- Угловые сектора -->
+                <path d="M1,6 a5,5 0 0 0 5,-5" stroke="white" fill="none" opacity="0.7" />
+                <path d="M119,6 a5,5 0 0 1 -5,-5" stroke="white" fill="none" opacity="0.7" />
+                <path d="M1,74 a5,5 0 0 1 5,5" stroke="white" fill="none" opacity="0.7" />
+                <path d="M119,74 a5,5 0 0 0 -5,5" stroke="white" fill="none" opacity="0.7" />
+            </svg>
+        </div>
         <div class="splash-screen">
             <!-- Анимированный футбольный мяч -->
             <div class="football-ball">
