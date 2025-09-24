@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Футбольные прогнозы</title>
     <!-- Football Predictions Landing Page v2.0 -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self' https://api.github.com; upgrade-insecure-requests">
+    <meta name="referrer" content="no-referrer">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css?v=3">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
@@ -91,8 +95,7 @@
             <div class="football-ball">
                 <img src="images/ball.png?v=4" 
                      alt="⚽" 
-                     class="ball-image"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                     class="ball-image">
                 <div class="ball-fallback" style="display: none;">⚽</div>
             </div>
             
@@ -101,7 +104,7 @@
             
             <!-- Кнопка скачивания -->
             <div class="download-section">
-                <button class="download-btn" onclick="downloadApp()">
+                <button class="download-btn" type="button">
                     <span class="download-icon">📱</span>
                     <span data-i18n="download_app">Скачать приложение</span>
                 </button>

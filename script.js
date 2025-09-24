@@ -197,6 +197,26 @@ document.addEventListener('DOMContentLoaded', function() {
 	addSoundEffects();
 	// Init language
 	initLang();
+	// Безопасная обработка ошибок загрузки изображения мяча (под CSP без inline)
+	const ballImg = document.querySelector('.ball-image');
+	if (ballImg && !ballImg.__bound) {
+		ballImg.addEventListener('error', () => {
+			ballImg.style.display = 'none';
+			const fallback = ballImg.nextElementSibling;
+			if (fallback) fallback.style.display = 'block';
+		});
+		ballImg.__bound = true;
+	}
+
+	// Назначаем обработчик кнопке скачивания вместо inline-обработчика
+	const downloadBtn = document.querySelector('.download-btn');
+	if (downloadBtn && !downloadBtn.__bound) {
+		downloadBtn.addEventListener('click', downloadApp);
+		downloadBtn.__bound = true;
+	}
+
+	// Лёгкая защита буфера обмена: предупреждаем при копировании/вставке ссылок
+	setupClipboardGuards();
 });
 
 // Звуковые эффекты (опционально)
@@ -253,3 +273,34 @@ window.addEventListener('scroll', function() {
 		parallax.style.transform = `translateY(${speed}px)`;
 	}
 });
+
+// Минимальная защита от копирования/вставки ссылок и простого хотлинкинга
+function setupClipboardGuards() {
+	// Блокируем drag-n-drop внешних ресурсов внутрь страницы
+	document.addEventListener('dragover', (e) => e.preventDefault());
+	document.addEventListener('drop', (e) => e.preventDefault());
+
+	// Предупреждение при копировании текста
+	document.addEventListener('copy', (e) => {
+		const selection = document.getSelection();
+		if (selection && selection.toString().length > 0) {
+			showTransientNotice('Копирование включено. Пожалуйста, указывайте источник.');
+		}
+	});
+
+	// Предупреждение при вставке URL
+	document.addEventListener('paste', (e) => {
+		const text = (e.clipboardData || window.clipboardData).getData('text');
+		if (/https?:\/\//i.test(text)) {
+			showTransientNotice('Вставка ссылок ограничена политикой сайта.');
+		}
+	});
+}
+
+function showTransientNotice(message) {
+	const notice = document.createElement('div');
+	notice.textContent = message;
+	notice.style.cssText = 'position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.7); color: #fff; padding: 8px 12px; border-radius: 8px; z-index: 1100; font-size: 14px;';
+	document.body.appendChild(notice);
+	setTimeout(() => { notice.remove(); }, 2200);
+}
