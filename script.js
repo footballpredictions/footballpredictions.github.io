@@ -1,7 +1,85 @@
+// I18n
+const I18N_DICTIONARY = {
+	ru: {
+		title: 'Футбольные прогнозы 2.0',
+		download_app: 'Скачать приложение',
+		version_prefix: 'Версия',
+		features: { predictions: 'Прогнозы', statistics: 'Статистика', h2h: '1 vs 2' },
+		toast_preparing: 'Идет подготовка загрузки...',
+		toast_start: 'Загрузка APK начнется сейчас...'
+	},
+	en: {
+		title: 'Football Predictions 2.0',
+		download_app: 'Download App',
+		version_prefix: 'Version',
+		features: { predictions: 'Predictions', statistics: 'Statistics', h2h: 'Head-to-Head' },
+		toast_preparing: 'Preparing download...',
+		toast_start: 'APK download will start now...'
+	}
+};
+
+function getSavedLang() {
+	return localStorage.getItem('lang') || 'ru';
+}
+
+function setLang(langCode) {
+	const next = langCode === 'ru' || langCode === 'en' ? langCode : 'ru';
+	localStorage.setItem('lang', next);
+	applyTranslations(next);
+	updateLangToggle(next);
+	const html = document.documentElement;
+	if (html) html.setAttribute('lang', next);
+}
+
+function updateLangToggle(langCode) {
+	const btn = document.querySelector('.lang-toggle');
+	if (!btn) return;
+	btn.textContent = langCode === 'ru' ? 'EN' : 'RU';
+	btn.setAttribute('aria-label', langCode === 'ru' ? 'Switch language to English' : 'Сменить язык на русский');
+}
+
+function applyTranslations(langCode) {
+	const dict = I18N_DICTIONARY[langCode] || I18N_DICTIONARY.ru;
+	// Simple keys
+	document.querySelectorAll('[data-i18n]').forEach((el) => {
+		const key = el.getAttribute('data-i18n');
+		if (!key) return;
+		const parts = key.split('.');
+		let value = dict;
+		for (const part of parts) {
+			value = value && value[part];
+		}
+		if (typeof value === 'string') {
+			el.textContent = value;
+		}
+	});
+	// Version label: keep number separate
+	const prefixEl = document.querySelector('.version-prefix');
+	if (prefixEl) prefixEl.textContent = dict.version_prefix;
+}
+
+function initLang() {
+	const saved = getSavedLang();
+	applyTranslations(saved);
+	updateLangToggle(saved);
+	const btn = document.querySelector('.lang-toggle');
+	if (btn && !btn.__bound) {
+		btn.addEventListener('click', () => {
+			const current = getSavedLang();
+			setLang(current === 'ru' ? 'en' : 'ru');
+		});
+		btn.__bound = true;
+	}
+	// Ensure html lang attribute
+	const html = document.documentElement;
+	if (html) html.setAttribute('lang', saved);
+}
+
 // Функция для скачивания приложения
 function downloadApp() {
 	// Показываем уведомление о скачивании
-	showDownloadNotification('Идет подготовка загрузки...');
+	const dict = I18N_DICTIONARY[getSavedLang()] || I18N_DICTIONARY.ru;
+	showDownloadNotification(dict.toast_preparing);
 
 	// Если уже знаем актуальную ссылку на APK — качаем сразу
 	if (window.__latestApkUrl) {
@@ -25,7 +103,8 @@ function downloadApp() {
 }
 
 function triggerDirectDownload(url) {
-	showDownloadNotification('Загрузка APK начнется сейчас...');
+    const dict = I18N_DICTIONARY[getSavedLang()] || I18N_DICTIONARY.ru;
+    showDownloadNotification(dict.toast_start);
 	const downloadBtn = document.querySelector('.download-btn');
 	if (downloadBtn) {
 		downloadBtn.style.transform = 'scale(0.95)';
@@ -61,7 +140,13 @@ function updateVersionLabel(tag) {
 	if (!tag) return;
 	const el = document.querySelector('.version-info');
 	if (el) {
-		el.textContent = `Версия ${tag}`;
+        const prefixEl = el.querySelector('.version-prefix');
+        const numberEl = el.querySelector('.version-number');
+        if (prefixEl && numberEl) {
+            numberEl.textContent = tag;
+        } else {
+            el.textContent = `${tag}`;
+        }
 	}
 }
 
@@ -110,6 +195,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	fetchLatestApkUrl();
 	// Звуковой эффект остаётся опциональным
 	addSoundEffects();
+	// Init language
+	initLang();
 });
 
 // Звуковые эффекты (опционально)
