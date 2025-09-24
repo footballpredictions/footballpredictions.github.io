@@ -190,7 +190,7 @@ function showDownloadNotification(text) {
 
 // Дополнительные эффекты при загрузке страницы
 // (Удалены летающие элементы)
-document.addEventListener('DOMContentLoaded', function() {
+function initPage() {
 	// Опционально подгрузим актуальную версию, чтобы сразу показать ее пользователю
 	fetchLatestApkUrl();
 	// Звуковой эффект остаётся опциональным
@@ -217,7 +217,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Лёгкая защита буфера обмена: предупреждаем при копировании/вставке ссылок
 	setupClipboardGuards();
-});
+}
+
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', initPage);
+} else {
+	initPage();
+}
 
 // Звуковые эффекты (опционально)
 function addSoundEffects() {
