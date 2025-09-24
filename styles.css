@@ -76,7 +76,7 @@ body {
 @keyframes fadeIn { from { opacity: 0; transform: translateY(30px);} to { opacity: 1; transform: translateY(0);} }
 
 /* Мяч */
-.football-ball { margin-bottom: 32px; animation: bounce 2s infinite ease-in-out; position: relative; display: inline-block; }
+.football-ball { margin-bottom: 16px; animation: bounce 2s infinite ease-in-out; position: relative; display: inline-block; }
 
 .ball-image {
 	width: 130px;
@@ -101,11 +101,11 @@ body {
 @keyframes bounce { 0%,20%,50%,80%,100%{ transform: translateY(0);} 40%{ transform: translateY(-20px);} 60%{ transform: translateY(-10px);} }
 
 /* Заголовки и секции */
-.app-title { font-family: 'Impact Local', Impact, 'Anton', 'Arial Black', system-ui, sans-serif; letter-spacing: 0.5px; text-transform: uppercase; font-size: 3.2rem; font-weight: 400; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,.3); animation: slideInUp 1s ease-out .5s both; }
+.app-title { font-family: 'Impact Local', Impact, 'Anton', 'Arial Black', system-ui, sans-serif; letter-spacing: 0.5px; text-transform: uppercase; font-size: 3.2rem; font-weight: 400; margin-bottom: 4px; text-shadow: 2px 2px 4px rgba(0,0,0,.3); animation: slideInUp 1s ease-out .5s both; }
 .app-subtitle { font-size: 1.4rem; font-weight: 300; margin-bottom: 28px; opacity: .9; animation: slideInUp 1s ease-out .7s both; }
 @keyframes slideInUp { from { opacity: 0; transform: translateY(50px);} to { opacity: 1; transform: translateY(0);} }
 
-.download-section { margin-bottom: 24px; animation: slideInUp 1s ease-out 1s both; }
+.download-section { margin-bottom: 12px; animation: slideInUp 1s ease-out 1s both; }
 .download-btn { background: linear-gradient(45deg, #FFD700, #FFA500); color: #2E7D32; border: none; padding: 14px 32px; font-size: 1.1rem; font-weight: 600; border-radius: 50px; cursor: pointer; transition: all .3s ease; box-shadow: 0 8px 25px rgba(255,215,0,.4); display: inline-flex; align-items: center; gap: 10px; }
 .download-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(255,215,0,.5); background: linear-gradient(45deg, #FFE55C, #FFB347); }
 .download-btn:active { transform: translateY(-1px); }
