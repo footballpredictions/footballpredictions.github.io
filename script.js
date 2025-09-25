@@ -285,10 +285,17 @@ function addSoundEffects() {
 			lfo.stop(startTime + duration + 0.02);
 		}
 
-		// Классический двойной свист арбитра: «твит-твит»
-		const tweetDur = 0.18;
-		scheduleTweet(3200, 3600, now, tweetDur);
-		scheduleTweet(3400, 3000, now + tweetDur + 0.09, tweetDur);
+		// Три свистка: длинный — короткий — длинный
+		const long1 = 0.28;
+		const short = 0.14;
+		const long2 = 0.32;
+		const gap = 0.10;
+		// Первый (длинный): небольшой подъём частоты
+		scheduleTweet(3000, 3600, now, long1);
+		// Второй (короткий): быстрый спад
+		scheduleTweet(3400, 3000, now + long1 + gap, short);
+		// Третий (длинный): подъём с чуть более высокой базой
+		scheduleTweet(3200, 3800, now + long1 + gap + short + gap, long2);
 	}
 	const downloadBtn = document.querySelector('.download-btn');
 	if (downloadBtn) downloadBtn.addEventListener('click', playWhistleSound);
