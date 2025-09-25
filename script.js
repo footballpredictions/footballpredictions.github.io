@@ -229,23 +229,56 @@ if (document.readyState === 'loading') {
 function addSoundEffects() {
 	// Создаем аудио контекст для звуковых эффектов
 	let audioContext;
-	function playClickSound() {
+	function playWhistleSound() {
 		if (!audioContext) {
 			audioContext = new (window.AudioContext || window.webkitAudioContext)();
 		}
-		const oscillator = audioContext.createOscillator();
-		const gainNode = audioContext.createGain();
-		oscillator.connect(gainNode);
-		gainNode.connect(audioContext.destination);
-		oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-		oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
-		gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-		gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-		oscillator.start(audioContext.currentTime);
-		oscillator.stop(audioContext.currentTime + 0.1);
+		const ctx = audioContext;
+		const now = ctx.currentTime;
+
+		// Источник: белый шум
+		const bufferSizeSeconds = 1.1;
+		const buffer = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * bufferSizeSeconds), ctx.sampleRate);
+		const data = buffer.getChannelData(0);
+		for (let i = 0; i < data.length; i++) {
+			data[i] = Math.random() * 2 - 1;
+		}
+		const noise = ctx.createBufferSource();
+		noise.buffer = buffer;
+
+		// Фильтр: узкополосный (свист)
+		const bandpass = ctx.createBiquadFilter();
+		bandpass.type = 'bandpass';
+		bandpass.frequency.setValueAtTime(3200, now);
+		bandpass.Q.setValueAtTime(12, now);
+
+		// Лёгкий вибрато (LFO) по частоте фильтра
+		const lfo = ctx.createOscillator();
+		lfo.type = 'sine';
+		lfo.frequency.setValueAtTime(7, now); // 7 Гц вибрато
+		const lfoGain = ctx.createGain();
+		lfoGain.gain.setValueAtTime(700, now); // глубина модуляции частоты
+		lfo.connect(lfoGain);
+		lfoGain.connect(bandpass.frequency);
+
+		// Громкость с огибающей
+		const gain = ctx.createGain();
+		gain.gain.setValueAtTime(0.0001, now);
+		gain.gain.exponentialRampToValueAtTime(0.7, now + 0.03);
+		gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
+
+		noise.connect(bandpass);
+		bandpass.connect(gain);
+		gain.connect(ctx.destination);
+
+		// Старт/стоп
+		lfo.start(now);
+		noise.start(now);
+		noise.stop(now + bufferSizeSeconds);
+		lfo.stop(now + bufferSizeSeconds);
 	}
 	const downloadBtn = document.querySelector('.download-btn');
-	if (downloadBtn) downloadBtn.addEventListener('click', playClickSound);
+	if (downloadBtn) downloadBtn.addEventListener('click', playWhistleSound);
 }
 
 // Обработка ошибок
