@@ -231,6 +231,8 @@ function addSoundEffects() {
 	let audioContext;
 	let whistleAudio;
 	let whistleStopTimer;
+	let whistleFadeTimer;
+	let whistleFadeInterval;
 	function playWhistleSound() {
 		if (!audioContext) {
 			audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -316,14 +318,44 @@ function addSoundEffects() {
 	function playWhistle() {
 		if (whistleAudio) {
 			try {
-				// Проигрываем короткий фрагмент аплодисментов (около 3.5 сек)
+				// Проигрываем фрагмент аплодисментов 12 сек с плавным затуханием в конце
+				const PLAY_MS = 12000;
+				const FADE_MS = 3000; // длительность затухания
+				const TARGET_VOLUME = 0.9;
+
 				if (whistleStopTimer) clearTimeout(whistleStopTimer);
-				whistleAudio.currentTime = 0;
+				if (whistleFadeTimer) clearTimeout(whistleFadeTimer);
+				if (whistleFadeInterval) clearInterval(whistleFadeInterval);
+
+				try { whistleAudio.pause(); } catch (_) {}
+				try { whistleAudio.currentTime = 0; } catch (_) {}
+				whistleAudio.volume = TARGET_VOLUME;
 				const playPromise = whistleAudio.play();
+
+				// Старт затухания за FADE_MS до конца
+				whistleFadeTimer = setTimeout(() => {
+					const start = Date.now();
+					const startVolume = whistleAudio.volume;
+					whistleFadeInterval = setInterval(() => {
+						const elapsed = Date.now() - start;
+						const t = Math.min(1, elapsed / FADE_MS);
+						const nextVol = startVolume * (1 - t);
+						whistleAudio.volume = Math.max(0, nextVol);
+						if (t >= 1) {
+							clearInterval(whistleFadeInterval);
+							whistleFadeInterval = null;
+						}
+					}, 60);
+				}, Math.max(0, PLAY_MS - FADE_MS));
+
+				// Остановка и сброс после 12 сек
 				whistleStopTimer = setTimeout(() => {
 					try { whistleAudio.pause(); } catch (_) {}
 					try { whistleAudio.currentTime = 0; } catch (_) {}
-				}, 3500);
+					whistleAudio.volume = TARGET_VOLUME;
+					if (whistleFadeTimer) { clearTimeout(whistleFadeTimer); whistleFadeTimer = null; }
+					if (whistleFadeInterval) { clearInterval(whistleFadeInterval); whistleFadeInterval = null; }
+				}, PLAY_MS);
 				if (playPromise && typeof playPromise.catch === 'function') {
 					playPromise.catch(() => playWhistleSound());
 				}
