@@ -236,46 +236,59 @@ function addSoundEffects() {
 		const ctx = audioContext;
 		const now = ctx.currentTime;
 
-		// Источник: белый шум
-		const bufferSizeSeconds = 1.1;
-		const buffer = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * bufferSizeSeconds), ctx.sampleRate);
-		const data = buffer.getChannelData(0);
-		for (let i = 0; i < data.length; i++) {
-			data[i] = Math.random() * 2 - 1;
+		function scheduleTweet(startFreq, endFreq, startTime, duration) {
+			// Два осциллятора с небольшой детюновкой создают характерный свист
+			const osc1 = ctx.createOscillator();
+			const osc2 = ctx.createOscillator();
+			osc1.type = 'triangle';
+			osc2.type = 'triangle';
+			osc1.frequency.setValueAtTime(startFreq, startTime);
+			osc2.frequency.setValueAtTime(startFreq * 1.02, startTime);
+			osc1.frequency.exponentialRampToValueAtTime(endFreq, startTime + duration);
+			osc2.frequency.exponentialRampToValueAtTime(endFreq * 1.02, startTime + duration);
+
+			// Лёгкий вибрато
+			const lfo = ctx.createOscillator();
+			lfo.type = 'sine';
+			lfo.frequency.setValueAtTime(8, startTime);
+			const lfoDepth1 = ctx.createGain();
+			const lfoDepth2 = ctx.createGain();
+			lfoDepth1.gain.setValueAtTime(60, startTime);
+			lfoDepth2.gain.setValueAtTime(60, startTime);
+			lfo.connect(lfoDepth1);
+			lfo.connect(lfoDepth2);
+			lfoDepth1.connect(osc1.frequency);
+			lfoDepth2.connect(osc2.frequency);
+
+			// Узкополосный фильтр, чтобы придать «свистковый» тембр
+			const bandpass = ctx.createBiquadFilter();
+			bandpass.type = 'bandpass';
+			bandpass.Q.setValueAtTime(18, startTime);
+			bandpass.frequency.setValueAtTime((startFreq + endFreq) / 2, startTime);
+
+			// Огибающая громкости — резкая атака, короткий спад
+			const gain = ctx.createGain();
+			gain.gain.setValueAtTime(0.0001, startTime);
+			gain.gain.exponentialRampToValueAtTime(0.6, startTime + 0.02);
+			gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+			osc1.connect(bandpass);
+			osc2.connect(bandpass);
+			bandpass.connect(gain);
+			gain.connect(ctx.destination);
+
+			osc1.start(startTime);
+			osc2.start(startTime);
+			lfo.start(startTime);
+			osc1.stop(startTime + duration + 0.02);
+			osc2.stop(startTime + duration + 0.02);
+			lfo.stop(startTime + duration + 0.02);
 		}
-		const noise = ctx.createBufferSource();
-		noise.buffer = buffer;
 
-		// Фильтр: узкополосный (свист)
-		const bandpass = ctx.createBiquadFilter();
-		bandpass.type = 'bandpass';
-		bandpass.frequency.setValueAtTime(3200, now);
-		bandpass.Q.setValueAtTime(12, now);
-
-		// Лёгкий вибрато (LFO) по частоте фильтра
-		const lfo = ctx.createOscillator();
-		lfo.type = 'sine';
-		lfo.frequency.setValueAtTime(7, now); // 7 Гц вибрато
-		const lfoGain = ctx.createGain();
-		lfoGain.gain.setValueAtTime(700, now); // глубина модуляции частоты
-		lfo.connect(lfoGain);
-		lfoGain.connect(bandpass.frequency);
-
-		// Громкость с огибающей
-		const gain = ctx.createGain();
-		gain.gain.setValueAtTime(0.0001, now);
-		gain.gain.exponentialRampToValueAtTime(0.7, now + 0.03);
-		gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
-
-		noise.connect(bandpass);
-		bandpass.connect(gain);
-		gain.connect(ctx.destination);
-
-		// Старт/стоп
-		lfo.start(now);
-		noise.start(now);
-		noise.stop(now + bufferSizeSeconds);
-		lfo.stop(now + bufferSizeSeconds);
+		// Классический двойной свист арбитра: «твит-твит»
+		const tweetDur = 0.18;
+		scheduleTweet(3200, 3600, now, tweetDur);
+		scheduleTweet(3400, 3000, now + tweetDur + 0.09, tweetDur);
 	}
 	const downloadBtn = document.querySelector('.download-btn');
 	if (downloadBtn) downloadBtn.addEventListener('click', playWhistleSound);
