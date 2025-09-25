@@ -230,6 +230,7 @@ function addSoundEffects() {
 	// Создаем аудио контекст для звуковых эффектов
 	let audioContext;
 	let whistleAudio;
+	let whistleStopTimer;
 	function playWhistleSound() {
 		if (!audioContext) {
 			audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -298,10 +299,12 @@ function addSoundEffects() {
 		// Третий (длинный): подъём с чуть более высокой базой
 		scheduleTweet(3200, 3800, now + long1 + gap + short + gap, long2);
 	}
-	// Попробуем загрузить внешний звук свистка (локальный файл)
+	// Попробуем загрузить внешний звук (локальный файл аплодисментов)
 	try {
-		whistleAudio = new Audio('sounds/referee_whistle.mp3');
+		whistleAudio = new Audio('sounds/applause_match.mp3');
 		whistleAudio.preload = 'auto';
+		whistleAudio.loop = false;
+		whistleAudio.volume = 0.9;
 		// В некоторых браузерах проигрывание разрешено только по юзер-жесту
 		whistleAudio.addEventListener('error', () => {
 			whistleAudio = null; // откат к синтезу
@@ -313,8 +316,17 @@ function addSoundEffects() {
 	function playWhistle() {
 		if (whistleAudio) {
 			try {
+				// Проигрываем короткий фрагмент аплодисментов (около 3.5 сек)
+				if (whistleStopTimer) clearTimeout(whistleStopTimer);
 				whistleAudio.currentTime = 0;
-				whistleAudio.play().catch(() => playWhistleSound());
+				const playPromise = whistleAudio.play();
+				whistleStopTimer = setTimeout(() => {
+					try { whistleAudio.pause(); } catch (_) {}
+					try { whistleAudio.currentTime = 0; } catch (_) {}
+				}, 3500);
+				if (playPromise && typeof playPromise.catch === 'function') {
+					playPromise.catch(() => playWhistleSound());
+				}
 			} catch (_) {
 				playWhistleSound();
 			}
