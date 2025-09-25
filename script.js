@@ -319,8 +319,8 @@ function addSoundEffects() {
 		if (whistleAudio) {
 			try {
 				// Проигрываем фрагмент аплодисментов 12 сек с плавным затуханием в конце
-				const PLAY_MS = 12000;
-				const FADE_MS = 3000; // длительность затухания
+				const PLAY_MS = 2000;
+				const FADE_MS = 600; // длительность затухания
 				const TARGET_VOLUME = 0.9;
 
 				if (whistleStopTimer) clearTimeout(whistleStopTimer);
