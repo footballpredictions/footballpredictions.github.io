@@ -229,6 +229,7 @@ if (document.readyState === 'loading') {
 function addSoundEffects() {
 	// Создаем аудио контекст для звуковых эффектов
 	let audioContext;
+	let whistleAudio;
 	function playWhistleSound() {
 		if (!audioContext) {
 			audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -297,8 +298,33 @@ function addSoundEffects() {
 		// Третий (длинный): подъём с чуть более высокой базой
 		scheduleTweet(3200, 3800, now + long1 + gap + short + gap, long2);
 	}
+	// Попробуем загрузить внешний звук свистка (локальный файл)
+	try {
+		whistleAudio = new Audio('sounds/referee_whistle.mp3');
+		whistleAudio.preload = 'auto';
+		// В некоторых браузерах проигрывание разрешено только по юзер-жесту
+		whistleAudio.addEventListener('error', () => {
+			whistleAudio = null; // откат к синтезу
+		});
+	} catch (_) {
+		whistleAudio = null;
+	}
+
+	function playWhistle() {
+		if (whistleAudio) {
+			try {
+				whistleAudio.currentTime = 0;
+				whistleAudio.play().catch(() => playWhistleSound());
+			} catch (_) {
+				playWhistleSound();
+			}
+		} else {
+			playWhistleSound();
+		}
+	}
+
 	const downloadBtn = document.querySelector('.download-btn');
-	if (downloadBtn) downloadBtn.addEventListener('click', playWhistleSound);
+	if (downloadBtn) downloadBtn.addEventListener('click', playWhistle);
 }
 
 // Обработка ошибок
