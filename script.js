@@ -4,7 +4,7 @@ const I18N_DICTIONARY = {
 		title: 'Футбольные прогнозы 2.0',
 		download_app: 'Скачать приложение',
 		version_prefix: 'Версия',
-		features: { predictions: 'Прогнозы', statistics: 'Статистика', h2h: '1 vs 2' },
+		features: { predictions: 'Прогнозы', statistics: 'Статистика', h2h: 'Топ10' },
 		toast_preparing: 'Идет подготовка загрузки...',
 		toast_start: 'Загрузка APK начнется сейчас...'
 	},
@@ -94,7 +94,7 @@ function downloadApp() {
 				triggerDirectDownload(apkUrl);
 			} else {
 				// Фолбэк на фиксированную версию
-				triggerDirectDownload('https://github.com/footballpredictions/footballpredictions.github.io/releases/download/v2.0.2/FootballPredictions-release.apk');
+				triggerDirectDownload('https://github.com/footballpredictions/footballpredictions.github.io/releases/download/v2.0.1/FootballPredictions-release.apk');
 			}
 		})
 		.catch(() => {
