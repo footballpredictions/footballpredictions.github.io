@@ -120,7 +120,7 @@ async function fetchLatestApkUrl() {
 	try {
 		// Добавляем timestamp для обхода кеша
 		const cacheBuster = '?_=' + Date.now();
-		const apiUrl = 'https://api.github.com/repos/footballpredictions/FootballAdminData/releases/latest' + cacheBuster;
+		const apiUrl = 'https://api.github.com/repos/footballpredictions/footballpredictions.github.io/releases/latest' + cacheBuster;
 		console.log('Fetching latest release from:', apiUrl);
 		
 		const res = await fetch(apiUrl, {
