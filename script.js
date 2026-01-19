@@ -126,9 +126,17 @@ async function fetchLatestApkUrl() {
 		const apkAsset = Array.isArray(data.assets) ? data.assets.find(a => typeof a.browser_download_url === 'string' && a.browser_download_url.toLowerCase().endsWith('.apk')) : null;
 		if (apkAsset && apkAsset.browser_download_url) {
 			window.__latestApkUrl = apkAsset.browser_download_url;
-			window.__latestVersionTag = data.tag_name || '';
-			updateVersionLabel(window.__latestVersionTag);
+			// Используем tag_name или name (заголовок релиза) для версии
+			const version = data.tag_name || data.name || '';
+			window.__latestVersionTag = version;
+			updateVersionLabel(version);
 			return window.__latestApkUrl;
+		}
+		// Даже если APK не найден, обновим версию из релиза
+		const version = data.tag_name || data.name || '';
+		if (version) {
+			window.__latestVersionTag = version;
+			updateVersionLabel(version);
 		}
 		return null;
 	} catch (e) {
@@ -136,16 +144,18 @@ async function fetchLatestApkUrl() {
 	}
 }
 
-function updateVersionLabel(tag) {
-	if (!tag) return;
+function updateVersionLabel(version) {
+	if (!version) return;
+	// Убираем префикс "v" если он есть (например, "v2.0.1" -> "2.0.1")
+	const cleanVersion = version.replace(/^v/i, '');
 	const el = document.querySelector('.version-info');
 	if (el) {
         const prefixEl = el.querySelector('.version-prefix');
         const numberEl = el.querySelector('.version-number');
         if (prefixEl && numberEl) {
-            numberEl.textContent = tag;
+            numberEl.textContent = cleanVersion;
         } else {
-            el.textContent = `${tag}`;
+            el.textContent = cleanVersion;
         }
 	}
 }
