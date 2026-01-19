@@ -98,7 +98,8 @@ function downloadApp() {
 			}
 		})
 		.catch(() => {
-			triggerDirectDownload('https://github.com/footballpredictions/footballpredictions.github.io/releases/download/v2.0.2/FootballPredictions-release.apk');
+			// Фолбэк на фиксированную версию (та же что в HTML)
+			triggerDirectDownload('https://github.com/footballpredictions/footballpredictions.github.io/releases/download/v2.0.1/FootballPredictions-release.apk');
 		});
 }
 
@@ -119,7 +120,10 @@ async function fetchLatestApkUrl() {
 	try {
 		// Добавляем timestamp для обхода кеша
 		const cacheBuster = '?_=' + Date.now();
-		const res = await fetch('https://api.github.com/repos/footballpredictions/FootballAdminData/releases/latest' + cacheBuster, {
+		const apiUrl = 'https://api.github.com/repos/footballpredictions/FootballAdminData/releases/latest' + cacheBuster;
+		console.log('Fetching latest release from:', apiUrl);
+		
+		const res = await fetch(apiUrl, {
 			headers: { 
 				'Accept': 'application/vnd.github+json',
 				'Cache-Control': 'no-cache',
@@ -127,24 +131,33 @@ async function fetchLatestApkUrl() {
 			},
 			cache: 'no-store'
 		});
-		if (!res.ok) throw new Error('Failed to fetch latest release');
-		const data = await res.json();
-		// Ищем asset c расширением .apk
-		const apkAsset = Array.isArray(data.assets) ? data.assets.find(a => typeof a.browser_download_url === 'string' && a.browser_download_url.toLowerCase().endsWith('.apk')) : null;
-		if (apkAsset && apkAsset.browser_download_url) {
-			window.__latestApkUrl = apkAsset.browser_download_url;
-			// Используем tag_name или name (заголовок релиза) для версии
-			const version = data.tag_name || data.name || '';
-			window.__latestVersionTag = version;
-			updateVersionLabel(version);
-			return window.__latestApkUrl;
+		
+		if (!res.ok) {
+			throw new Error(`Failed to fetch latest release: ${res.status} ${res.statusText}`);
 		}
-		// Даже если APK не найден, обновим версию из релиза
+		
+		const data = await res.json();
+		console.log('Release data received:', { tag_name: data.tag_name, name: data.name, assets_count: data.assets?.length });
+		
+		// Используем tag_name или name (заголовок релиза) для версии
 		const version = data.tag_name || data.name || '';
 		if (version) {
 			window.__latestVersionTag = version;
 			updateVersionLabel(version);
+		} else {
+			console.warn('No version found in release data');
 		}
+		
+		// Ищем asset c расширением .apk
+		const apkAsset = Array.isArray(data.assets) ? data.assets.find(a => typeof a.browser_download_url === 'string' && a.browser_download_url.toLowerCase().endsWith('.apk')) : null;
+		if (apkAsset && apkAsset.browser_download_url) {
+			window.__latestApkUrl = apkAsset.browser_download_url;
+			console.log('APK URL found:', window.__latestApkUrl);
+			return window.__latestApkUrl;
+		} else {
+			console.warn('APK asset not found in release');
+		}
+		
 		return null;
 	} catch (e) {
 		console.error('Failed to fetch latest release:', e);
@@ -153,20 +166,31 @@ async function fetchLatestApkUrl() {
 }
 
 function updateVersionLabel(version) {
-	if (!version) return;
+	if (!version) {
+		console.warn('updateVersionLabel: version is empty');
+		return;
+	}
 	// Убираем префикс "v" если он есть (например, "v2.0.1" -> "2.0.1")
-	const cleanVersion = version.replace(/^v/i, '');
+	const cleanVersion = version.replace(/^v/i, '').trim();
+	if (!cleanVersion) {
+		console.warn('updateVersionLabel: cleanVersion is empty after processing:', version);
+		return;
+	}
+	
 	const el = document.querySelector('.version-info');
-	if (el) {
-        const prefixEl = el.querySelector('.version-prefix');
-        const numberEl = el.querySelector('.version-number');
-        if (prefixEl && numberEl) {
-            numberEl.textContent = cleanVersion;
-            console.log('Version updated to:', cleanVersion);
-        } else {
-            el.textContent = cleanVersion;
-            console.log('Version updated to:', cleanVersion);
-        }
+	if (!el) {
+		console.warn('updateVersionLabel: .version-info element not found');
+		return;
+	}
+	
+	const prefixEl = el.querySelector('.version-prefix');
+	const numberEl = el.querySelector('.version-number');
+	if (prefixEl && numberEl) {
+		numberEl.textContent = cleanVersion;
+		console.log('Version updated to:', cleanVersion);
+	} else {
+		el.textContent = cleanVersion;
+		console.log('Version updated to (fallback):', cleanVersion);
 	}
 }
 
@@ -212,14 +236,24 @@ function showDownloadNotification(text) {
 // (Удалены летающие элементы)
 function initPage() {
 	// Приоритетно загружаем актуальную версию, чтобы сразу показать ее пользователю
-	// Вызываем сразу, не дожидаясь других инициализаций
-	fetchLatestApkUrl().catch(() => {
-		// Если ошибка, версия останется из HTML (fallback)
-		// Повторная попытка через 2 секунды на случай медленного ответа
-		setTimeout(() => {
-			fetchLatestApkUrl().catch(() => {});
-		}, 2000);
-	});
+	// Небольшая задержка для гарантии готовности DOM
+	setTimeout(() => {
+		console.log('Initializing page, fetching latest version...');
+		fetchLatestApkUrl()
+			.then(() => {
+				console.log('Version fetch completed');
+			})
+			.catch((err) => {
+				console.error('Version fetch failed:', err);
+				// Повторная попытка через 2 секунды на случай медленного ответа
+				setTimeout(() => {
+					console.log('Retrying version fetch...');
+					fetchLatestApkUrl().catch((retryErr) => {
+						console.error('Retry failed:', retryErr);
+					});
+				}, 2000);
+			});
+	}, 100);
 	// Звуковой эффект остаётся опциональным
 	addSoundEffects();
 	// Init language
