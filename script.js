@@ -117,8 +117,15 @@ function triggerDirectDownload(url) {
 // Получение последнего релиза и ссылки на APK
 async function fetchLatestApkUrl() {
 	try {
-		const res = await fetch('https://api.github.com/repos/footballpredictions/FootballAdminData/releases/latest', {
-			headers: { 'Accept': 'application/vnd.github+json' }
+		// Добавляем timestamp для обхода кеша
+		const cacheBuster = '?_=' + Date.now();
+		const res = await fetch('https://api.github.com/repos/footballpredictions/FootballAdminData/releases/latest' + cacheBuster, {
+			headers: { 
+				'Accept': 'application/vnd.github+json',
+				'Cache-Control': 'no-cache',
+				'Pragma': 'no-cache'
+			},
+			cache: 'no-store'
 		});
 		if (!res.ok) throw new Error('Failed to fetch latest release');
 		const data = await res.json();
@@ -140,6 +147,7 @@ async function fetchLatestApkUrl() {
 		}
 		return null;
 	} catch (e) {
+		console.error('Failed to fetch latest release:', e);
 		return null;
 	}
 }
@@ -154,8 +162,10 @@ function updateVersionLabel(version) {
         const numberEl = el.querySelector('.version-number');
         if (prefixEl && numberEl) {
             numberEl.textContent = cleanVersion;
+            console.log('Version updated to:', cleanVersion);
         } else {
             el.textContent = cleanVersion;
+            console.log('Version updated to:', cleanVersion);
         }
 	}
 }
@@ -201,8 +211,15 @@ function showDownloadNotification(text) {
 // Дополнительные эффекты при загрузке страницы
 // (Удалены летающие элементы)
 function initPage() {
-	// Опционально подгрузим актуальную версию, чтобы сразу показать ее пользователю
-	fetchLatestApkUrl();
+	// Приоритетно загружаем актуальную версию, чтобы сразу показать ее пользователю
+	// Вызываем сразу, не дожидаясь других инициализаций
+	fetchLatestApkUrl().catch(() => {
+		// Если ошибка, версия останется из HTML (fallback)
+		// Повторная попытка через 2 секунды на случай медленного ответа
+		setTimeout(() => {
+			fetchLatestApkUrl().catch(() => {});
+		}, 2000);
+	});
 	// Звуковой эффект остаётся опциональным
 	addSoundEffects();
 	// Init language
