@@ -125,9 +125,7 @@ async function fetchLatestApkUrl() {
 		
 		const res = await fetch(apiUrl, {
 			headers: { 
-				'Accept': 'application/vnd.github+json',
-				'Cache-Control': 'no-cache',
-				'Pragma': 'no-cache'
+				'Accept': 'application/vnd.github+json'
 			},
 			cache: 'no-store'
 		});
