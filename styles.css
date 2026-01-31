@@ -135,6 +135,9 @@ body {
 .app-info { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; animation: slideInUp 1s ease-out 1.2s both; }
 .feature { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; opacity: .9; transition: opacity .3s ease; min-width: 120px; }
 .feature:hover { opacity: 1; }
+.feature-btn { background: transparent; border: 1px solid rgba(255,255,255,0.35); border-radius: 16px; padding: 16px 20px; cursor: pointer; color: inherit; font-family: inherit; transition: all .25s ease; }
+.feature-btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.6); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.feature-btn:active { transform: translateY(0); }
 /* Единый бокс 36x36 для выравнивания строк */
 .feature-icon { width: 36px; height: 36px; display: grid; place-items: center; line-height: 0; }
 /* Размеры содержимого */
@@ -171,6 +174,88 @@ body {
 .telegram-link .telegram-icon {
 	flex-shrink: 0;
 }
+
+/* Модальное окно с описанием функции */
+.feature-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	animation: fadeIn 0.25s ease-out;
+}
+.feature-modal[hidden] { display: none; }
+.feature-modal-backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(0,0,0,0.65);
+	backdrop-filter: blur(4px);
+	cursor: pointer;
+}
+.feature-modal-content {
+	position: relative;
+	background: linear-gradient(160deg, #1a472a 0%, #2d5a3a 50%, #1e3d28 100%);
+	border: 1px solid rgba(255,255,255,0.25);
+	border-radius: 20px;
+	max-width: 480px;
+	width: 100%;
+	max-height: 85vh;
+	overflow-y: auto;
+	box-shadow: 0 24px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08);
+	padding: 28px 24px 24px;
+}
+.feature-modal-close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 36px;
+	height: 36px;
+	background: rgba(255,255,255,0.15);
+	border: none;
+	border-radius: 50%;
+	color: #fff;
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background .2s ease;
+}
+.feature-modal-close:hover { background: rgba(255,255,255,0.3); }
+.feature-modal-title {
+	font-family: 'Impact Local', Impact, 'Anton', 'Arial Black', system-ui, sans-serif;
+	font-size: 1.5rem;
+	font-weight: 400;
+	margin-bottom: 16px;
+	color: #fff;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+.feature-modal-images {
+	margin-bottom: 16px;
+	min-height: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	justify-content: center;
+}
+.feature-modal-img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.feature-modal-body {
+	color: rgba(255,255,255,0.95);
+	font-size: 0.95rem;
+	line-height: 1.6;
+}
+.feature-modal-body p { margin-bottom: 12px; }
+.feature-modal-body p:last-child { margin-bottom: 0; }
+.feature-modal-bullet { padding-left: 8px; }
 
 /* Портрет (мобильный): НЕ вращаем поле, показываем центральную область */
 @media (orientation: portrait){
