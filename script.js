@@ -1,6 +1,7 @@
 // Картинки для модальных окон (опционально).
 window.FEATURE_IMAGES = {
-	bankroll: ['images/банкролл.jpg']
+	bankroll: ['images/банкролл.jpg'],
+	h2h: ['images/топ10.jpg']
 };
 
 // I18n
@@ -14,7 +15,7 @@ const I18N_DICTIONARY = {
 			predictions: 'Главный экран приложения. Здесь отображаются актуальные прогнозы на футбольные матчи: дата, время, лига, команды и рекомендуемый исход. Можно обновить список свайпом вниз. Часть прогнозов доступна бесплатно, полный доступ — по подписке.',
 			statistics: 'Две вкладки:\n\n• Статистика 3-x (бесплатная) — результаты прогнозов за последний месяц, 3 месяца и за всё время: выигрыши, проигрыши, возвраты, процент успешности.\n\n• Статистика $ (платная, появится при подключенной подписке) — расширенная статистика для подписчиков по платным прогнозам.',
 			h2h: 'Специальные списки, составленные нашим алгоритмом: Тотал больше 2.5, Обе забьют, Победы, Тотал Угловых, Тотал Жёлтых карточек, Тотал Фолов. Помогают найти матчи на сегодня под конкретные ставки.',
-			bankroll: 'Находится в профиле. Учёт ставок:\n\n• Установка начальной суммы банка\n• Добавление ставок — сумма, коэффициент, исход\n• Текущий банкролл (начальный + прибыль/убыток)\n• Статистика: всего ставок, процент выигрышей, ROI, общая прибыль\n• Очистка банкролла (в меню — иконка корзины)'
+			bankroll: 'Банкролл создан для учёта ставок и контроля дохода и расхода.\n\nСначала установите банк — введите сумму вашего банкролла (например, 10 000 ₽) и нажмите «Сохранить». Затем добавляйте ставку: матч (например, Арсенал — Челси), прогноз (например, П1), сумму из банкролла на матч (например, 500 ₽) и коэффициент (например, 1,6). По окончании матча нажмите «Установить результат», выберите исход (выигрыш, проигрыш или возврат) и сохраните — программа рассчитает и сохранит ваш доход или расход, процент выигрыша, общую прибыль и ROI.\n\nROI (Return on Investment) — это доходность в процентах: сколько вы заработали или потеряли относительно всех поставленных денег. Например, ROI +15% значит, что на каждые 100 ₽ ставок вы в среднем получили 15 ₽ прибыли.'
 		},
 		telegram_channel: 'Наш канал в Telegram',
 		toast_preparing: 'Идет подготовка загрузки...',
@@ -30,7 +31,7 @@ const I18N_DICTIONARY = {
 			predictions: 'Main app screen. Displays current football match predictions: date, time, league, teams and recommended outcome. Pull down to refresh. Some predictions are free, full access — by subscription.',
 			statistics: 'Two tabs:\n\n• Stats 3-x (free) — prediction results for the last month, 3 months and all time: wins, losses, returns, success rate.\n\n• Stats $ (paid, appears with subscription) — extended statistics for subscribers on paid predictions.',
 			h2h: 'Special lists compiled by our algorithm: Total over 2.5, Both to Score, Wins, Total Corners, Total Yellow Cards, Total Fouls. Helps find today\'s matches for specific bets.',
-			bankroll: 'Located in profile. Bet tracking:\n\n• Set initial bank amount\n• Add bets — amount, odds, outcome\n• Current bankroll (initial + profit/loss)\n• Stats: total bets, win rate, ROI, total profit\n• Clear bankroll (menu — trash icon)'
+			bankroll: 'Bankroll is for tracking your bets and controlling income and expenses.\n\nFirst set your bank — enter your bankroll amount (e.g. $500) and tap Save. Then add a bet: match (e.g. Arsenal vs Chelsea), forecast (e.g. Home Win), stake from your bankroll (e.g. $25) and odds (e.g. 1.6). When the match ends, tap Set result, choose outcome (win, loss or push) and save — the app will calculate and store your profit or loss, win rate, total profit and ROI.\n\nROI (Return on Investment) is your profitability in per cent: how much you made or lost relative to all money staked. For example, ROI +15% means you gained 15% profit on your total stakes.'
 		},
 		telegram_channel: 'Our Telegram channel',
 		toast_preparing: 'Preparing download...',
