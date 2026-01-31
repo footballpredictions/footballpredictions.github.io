@@ -20,6 +20,7 @@ const I18N_DICTIONARY = {
 		telegram_channel: 'Наш канал в Telegram',
 		toast_preparing: 'Идет подготовка загрузки...',
 		toast_start: 'Загрузка APK начнется сейчас...',
+		toast_android_hint: 'Если установка не началась — откройте папку «Загрузки» и нажмите на файл APK.',
 		modal_close: 'Закрыть'
 	},
 	en: {
@@ -36,6 +37,7 @@ const I18N_DICTIONARY = {
 		telegram_channel: 'Our Telegram channel',
 		toast_preparing: 'Preparing download...',
 		toast_start: 'APK download will start now...',
+		toast_android_hint: 'If installation didn\'t start — open Downloads and tap the APK file.',
 		modal_close: 'Close'
 	}
 };
@@ -125,16 +127,35 @@ function downloadApp() {
 		});
 }
 
+function isAndroid() {
+	return /Android/i.test(navigator.userAgent);
+}
+
 function triggerDirectDownload(url) {
-    const dict = I18N_DICTIONARY[getSavedLang()] || I18N_DICTIONARY.ru;
-    showDownloadNotification(dict.toast_start);
+	const dict = I18N_DICTIONARY[getSavedLang()] || I18N_DICTIONARY.ru;
+	showDownloadNotification(dict.toast_start);
 	const downloadBtn = document.querySelector('.download-btn');
 	if (downloadBtn) {
 		downloadBtn.style.transform = 'scale(0.95)';
 		setTimeout(() => { downloadBtn.style.transform = ''; }, 150);
 	}
-	// Прямой переход на файл APK
-	window.location.href = url;
+	// На Android 15–16 скачивание часто доходит до 100%, но установщик не открывается.
+	// Запускаем скачивание через <a download>, затем подсказка открыть «Загрузки».
+	const filename = url.split('/').pop().split('?')[0] || 'FootballPredictions-release.apk';
+	const a = document.createElement('a');
+	a.href = url;
+	a.download = filename;
+	a.rel = 'noopener noreferrer';
+	a.style.display = 'none';
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
+	// Подсказка для Android: после скачивания открыть «Загрузки» и нажать на APK
+	if (isAndroid()) {
+		setTimeout(() => {
+			showDownloadNotification(dict.toast_android_hint || dict.toast_start);
+		}, 5000);
+	}
 }
 
 // Получение последнего релиза и ссылки на APK
