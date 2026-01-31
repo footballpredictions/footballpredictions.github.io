@@ -147,6 +147,31 @@ body {
 
 .feature span:last-child { font-size: .95rem; font-weight: 300; }
 
+/* Ссылка на Telegram */
+.telegram-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 24px;
+	padding: 12px 24px;
+	background: rgba(0, 136, 204, 0.25);
+	color: #fff;
+	text-decoration: none;
+	border-radius: 50px;
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	transition: all .3s ease;
+	animation: slideInUp 1s ease-out 1.3s both;
+}
+.telegram-link:hover {
+	background: rgba(0, 136, 204, 0.45);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(0, 136, 204, 0.3);
+}
+.telegram-link .telegram-icon {
+	flex-shrink: 0;
+}
+
 /* Портрет (мобильный): НЕ вращаем поле, показываем центральную область */
 @media (orientation: portrait){
 	.field-overlay { left: 0.5vmin; right: 0.5vmin; top: 50%; transform: translateY(-50%); }

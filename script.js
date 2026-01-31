@@ -5,6 +5,7 @@ const I18N_DICTIONARY = {
 		download_app: 'Скачать приложение',
 		version_prefix: 'Версия',
 		features: { predictions: 'Прогнозы', statistics: 'Статистика', h2h: 'Топ10' },
+		telegram_channel: 'Наш канал в Telegram',
 		toast_preparing: 'Идет подготовка загрузки...',
 		toast_start: 'Загрузка APK начнется сейчас...'
 	},
@@ -12,7 +13,8 @@ const I18N_DICTIONARY = {
 		title: 'Football Predictions 2.0',
 		download_app: 'Download App',
 		version_prefix: 'Version',
-		features: { predictions: 'Predictions', statistics: 'Statistics', h2h: 'Head-to-Head' },
+		features: { predictions: 'Predictions', statistics: 'Statistics', h2h: 'Top 10' },
+		telegram_channel: 'Our Telegram channel',
 		toast_preparing: 'Preparing download...',
 		toast_start: 'APK download will start now...'
 	}
