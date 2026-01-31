@@ -241,12 +241,22 @@ body {
 	flex-wrap: wrap;
 	gap: 12px;
 	justify-content: center;
+	align-items: center;
 }
 .feature-modal-img {
 	max-width: 100%;
+	width: auto;
+	max-height: min(280px, 45vh);
 	height: auto;
+	object-fit: contain;
 	border-radius: 12px;
 	box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+	display: block;
+}
+@media (max-width: 480px) {
+	.feature-modal-img {
+		max-height: min(220px, 40vh);
+	}
 }
 .feature-modal-body {
 	color: rgba(255,255,255,0.95);
