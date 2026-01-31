@@ -139,18 +139,9 @@ function triggerDirectDownload(url) {
 		downloadBtn.style.transform = 'scale(0.95)';
 		setTimeout(() => { downloadBtn.style.transform = ''; }, 150);
 	}
-	// На Android 15–16 скачивание часто доходит до 100%, но установщик не открывается.
-	// Запускаем скачивание через <a download>, затем подсказка открыть «Загрузки».
-	const filename = url.split('/').pop().split('?')[0] || 'FootballPredictions-release.apk';
-	const a = document.createElement('a');
-	a.href = url;
-	a.download = filename;
-	a.rel = 'noopener noreferrer';
-	a.style.display = 'none';
-	document.body.appendChild(a);
-	a.click();
-	document.body.removeChild(a);
-	// Подсказка для Android: после скачивания открыть «Загрузки» и нажать на APK
+	// Прямой переход на файл APK (как раньше — стабильно на старых версиях)
+	window.location.href = url;
+	// Подсказка для Android 15–16: если установка не открылась — открыть «Загрузки» и нажать на APK
 	if (isAndroid()) {
 		setTimeout(() => {
 			showDownloadNotification(dict.toast_android_hint || dict.toast_start);
