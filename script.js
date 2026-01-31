@@ -117,14 +117,22 @@ function downloadApp() {
 			if (apkUrl) {
 				triggerDirectDownload(apkUrl);
 			} else {
-				// Фолбэк на фиксированную версию
-				triggerDirectDownload('https://github.com/footballpredictions/footballpredictions.github.io/releases/download/v2.0.1/FootballPredictions-release.apk');
+				triggerDirectDownload(getFallbackApkUrl());
 			}
 		})
 		.catch(() => {
-			// Фолбэк на фиксированную версию (та же что в HTML)
-			triggerDirectDownload('https://github.com/footballpredictions/footballpredictions.github.io/releases/download/v2.0.1/FootballPredictions-release.apk');
+			triggerDirectDownload(getFallbackApkUrl());
 		});
+}
+
+function getFallbackApkUrl() {
+	var v = (window.__latestVersionTag || '').replace(/^v/i, '').trim();
+	if (!v) {
+		var el = document.querySelector('.version-number');
+		v = (el && el.textContent) ? el.textContent.trim() : '2.0.2';
+	}
+	if (!v) v = '2.0.2';
+	return 'https://github.com/footballpredictions/footballpredictions.github.io/releases/download/v' + v + '/FootballPredictions-release.apk';
 }
 
 function isAndroid() {
@@ -193,6 +201,23 @@ async function fetchLatestApkUrl() {
 		return null;
 	} catch (e) {
 		console.error('Failed to fetch latest release:', e);
+		return null;
+	}
+}
+
+// Версия с того же сайта (нет CORS) — работает на старых устройствах. При релизе обновить только version.json.
+async function fetchVersionFromSameOrigin() {
+	try {
+		var res = await fetch('/version.json?t=' + Date.now(), { cache: 'no-store' });
+		if (!res.ok) return null;
+		var data = await res.json();
+		var version = (data && data.version) ? String(data.version).trim() : '';
+		if (!version) return null;
+		window.__latestVersionTag = version.indexOf('v') === 0 ? version : 'v' + version;
+		updateVersionLabel(window.__latestVersionTag);
+		window.__latestApkUrl = getFallbackApkUrl();
+		return window.__latestApkUrl;
+	} catch (e) {
 		return null;
 	}
 }
@@ -341,11 +366,16 @@ function initPage() {
 			})
 			.catch((err) => {
 				console.error('Version fetch failed:', err);
-				// Повторная попытка через 2 секунды на случай медленного ответа
+				// На старых устройствах API часто недоступен — берём версию с того же сайта (version.json, без CORS)
+				fetchVersionFromSameOrigin().then(function (url) {
+					if (url) console.log('Version from version.json:', window.__latestVersionTag);
+				});
+				// Повторная попытка API через 2 секунды
 				setTimeout(() => {
 					console.log('Retrying version fetch...');
 					fetchLatestApkUrl().catch((retryErr) => {
 						console.error('Retry failed:', retryErr);
+						fetchVersionFromSameOrigin();
 					});
 				}, 2000);
 			});
