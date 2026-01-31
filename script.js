@@ -11,7 +11,7 @@ const I18N_DICTIONARY = {
 		feature_desc: {
 			predictions: 'Главный экран приложения. Здесь отображаются актуальные прогнозы на футбольные матчи: дата, время, лига, команды и рекомендуемый исход. Можно обновить список свайпом вниз. Часть прогнозов доступна бесплатно, полный доступ — по подписке.',
 			statistics: 'Две вкладки:\n\n• Статистика 3-x (бесплатная) — результаты прогнозов за последний месяц, 3 месяца и за всё время: выигрыши, проигрыши, возвраты, процент успешности.\n\n• Статистика $ (платная, появится при подключенной подписке) — расширенная статистика для подписчиков по платным прогнозам.',
-			h2h: 'Специальные списки, составленные нашим алгоритмом: Total 2.5, Обе забьют, Победы, Угловые, Жёлтые карточки, Фолы. Помогают найти матчи на сегодня под конкретные ставки.'
+			h2h: 'Специальные списки, составленные нашим алгоритмом: Тотал больше 2.5, Обе забьют, Победы, Тотал Угловых, Тотал Жёлтых карточек, Тотал Фолов. Помогают найти матчи на сегодня под конкретные ставки.'
 		},
 		telegram_channel: 'Наш канал в Telegram',
 		toast_preparing: 'Идет подготовка загрузки...',
@@ -26,7 +26,7 @@ const I18N_DICTIONARY = {
 		feature_desc: {
 			predictions: 'Main app screen. Displays current football match predictions: date, time, league, teams and recommended outcome. Pull down to refresh. Some predictions are free, full access — by subscription.',
 			statistics: 'Two tabs:\n\n• Stats 3-x (free) — prediction results for the last month, 3 months and all time: wins, losses, returns, success rate.\n\n• Stats $ (paid, appears with subscription) — extended statistics for subscribers on paid predictions.',
-			h2h: 'Special lists compiled by our algorithm: Total 2.5, Both to Score, Wins, Corners, Yellow Cards, Fouls. Helps find today\'s matches for specific bets.'
+			h2h: 'Special lists compiled by our algorithm: Total over 2.5, Both to Score, Wins, Total Corners, Total Yellow Cards, Total Fouls. Helps find today\'s matches for specific bets.'
 		},
 		telegram_channel: 'Our Telegram channel',
 		toast_preparing: 'Preparing download...',
