@@ -1,7 +1,9 @@
 // Картинки для модальных окон (опционально).
 window.FEATURE_IMAGES = {
-	bankroll: ['images/банкролл.jpg'],
-	h2h: ['images/топ10.jpg']
+	predictions: ['images/прогнозы.jpg'],
+	statistics: ['images/статистика.jpg'],
+	h2h: ['images/топ10.jpg'],
+	bankroll: ['images/банкролл.jpg']
 };
 
 // I18n
