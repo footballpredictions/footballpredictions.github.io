@@ -34,9 +34,22 @@ footballpredictions.github.io/
 
 ## Ссылки
 
-- [Приложение (исходный код)](https://github.com/footballpredictions/FootballAdminData/tree/app2)
 - [Последний релиз](https://github.com/footballpredictions/footballpredictions.github.io/releases/latest)
 - [Telegram-канал](https://t.me/+KZsHR8ZMKBlhYjQy)
+
+## Технологии
+
+- HTML5
+- CSS3 (Flexbox, Grid, Animations)
+- JavaScript (ES6+)
+- Google Fonts (Roboto)
+
+## Браузерная поддержка
+
+- Chrome 60+
+- Firefox 55+
+- Safari 12+
+- Edge 79+
 
 ## Лицензия
 
