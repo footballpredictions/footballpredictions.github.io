@@ -15,8 +15,8 @@ const I18N_DICTIONARY = {
 		features: { predictions: 'Прогнозы', statistics: 'Статистика', h2h: 'Топ10', bankroll: 'Банкролл' },
 		feature_desc: {
 			predictions: 'Главный экран приложения. Здесь отображаются актуальные прогнозы на футбольные матчи: дата, время, лига, команды и рекомендуемый исход. Можно обновить список свайпом вниз. Часть прогнозов доступна бесплатно, полный доступ — по подписке.',
-			statistics: 'Две вкладки:\n\n• Статистика 3-x (бесплатная) — результаты прогнозов за последний месяц, 3 месяца и за всё время: выигрыши, проигрыши, возвраты, процент успешности.\n\n• Статистика $ (платная, появится при подключенной подписке) — расширенная статистика для подписчиков по платным прогнозам.',
-			h2h: 'Специальные списки, составленные нашим алгоритмом: Тотал больше 2.5, Обе забьют, Победы, Тотал Угловых, Тотал Жёлтых карточек, Тотал Фолов. Помогают найти матчи на сегодня под конкретные ставки.',
+			statistics: 'Две вкладки:\n\n• Статистика 3-x (бесплатная) — результаты прогнозов за последний месяц, 3 месяца и за всё время: выигрыши, проигрыши, возвраты, процент побед.\n\n• Статистика $ (платная, появится при подключенной подписке) — расширенная статистика для подписчиков по платным прогнозам.',
+			h2h: 'Специальные списки, составленные нашим алгоритмом: Тотал больше 2.5, Обе забьют, Победы, Тотал Угловых, Тотал Жёлтых карточек, Тотал Фолов. Помогают найти матчи на сегодня под конкретные события.',
 			bankroll: 'Банкролл создан для учёта событий и контроля дохода и расхода (находится в профиле).\n\nСначала установите банк — введите сумму вашего банкролла (например, 10 000 ₽) и нажмите «Сохранить». Затем добавляйте событие: матч (например, Арсенал — Челси), прогноз (например, П1), сумму из банкролла на матч (например, 500 ₽) и коэффициент (например, 1,6). По окончании матча нажмите «Установить результат», выберите исход (выигрыш, проигрыш или возврат) и сохраните — программа рассчитает и сохранит ваш доход или расход, процент выигрыша, общую прибыль и ROI.\n\nROI (Return on Investment) — это доходность в процентах: сколько вы заработали или потеряли относительно всех поставленных денег. Например, ROI +15% значит, что на каждые 100 ₽ вы в среднем получили 15 ₽ прибыли.'
 		},
 		telegram_channel: 'Наш канал в Telegram',
@@ -29,11 +29,11 @@ const I18N_DICTIONARY = {
 		title: 'Football Predictions 2.0',
 		download_app: 'Download App',
 		version_prefix: 'Version',
-		features: { predictions: 'Predictions', statistics: 'Statistics', h2h: 'Top Ten', bankroll: 'Bankroll' },
+		features: { predictions: 'Predictions', statistics: 'Statistics', h2h: 'Top 10', bankroll: 'Bankroll' },
 		feature_desc: {
 			predictions: 'Main app screen. Displays current football match predictions: date, time, league, teams and recommended outcome. Pull down to refresh. Some predictions are free, full access — by subscription.',
-			statistics: 'Two tabs:\n\n• Stats 3-x (free) — prediction results for the last month, 3 months and all time: wins, losses, returns, success rate.\n\n• Stats $ (paid, appears with subscription) — extended statistics for subscribers on paid predictions.',
-			h2h: 'Special lists compiled by our algorithm: Total over 2.5, Both to Score, Wins, Total Corners, Total Yellow Cards, Total Fouls. Helps find today\'s matches for specific bets.',
+			statistics: 'Two tabs:\n\n• Stats 3-x (free) — prediction results for the last month, 3 months and all time: wins, losses, returns, win rate.\n\n• Stats $ (paid, appears with subscription) — extended statistics for subscribers on paid predictions.',
+			h2h: 'Special lists compiled by our algorithm: Total over 2.5, Both to Score, Wins, Total Corners, Total Yellow Cards, Total Fouls. Helps find today\'s matches for specific events.',
 			bankroll: 'Bankroll is created to track your events and control profit and loss (located in your profile).\n\nFirst set your bank — enter your bankroll amount (for example, 10,000 RUB) and tap \"Save\". Then add an event: match (for example, Arsenal vs Chelsea), prediction (for example, Home Win), amount taken from the bankroll for this match (for example, 500 RUB) and odds (for example, 1.6). When the match ends, tap \"Set result\", choose the outcome (win, loss or push) and save — the app will calculate and store your profit or loss, win rate, total profit and ROI.\n\nROI (Return on Investment) is your profitability in percent: how much you have earned or lost relative to all money staked. For example, ROI +15% means that for every 100 RUB staked you gained 15 RUB profit on average.'
 		},
 		telegram_channel: 'Our Telegram channel',
