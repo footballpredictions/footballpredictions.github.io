@@ -296,15 +296,9 @@ body {
 .feature-modal-body p:last-child { margin-bottom: 0; }
 .feature-modal-bullet { padding-left: 8px; }
 
-/* Футер — всегда внизу, никогда не перекрывает контент */
+/* Футер — внутри splash-screen, идёт после кнопки Telegram */
 .site-footer {
-	width: 100%;
-	flex-shrink: 0;
-	position: relative;
-	z-index: 1;
-	text-align: center;
-	padding: 16px 16px;
-	margin-top: auto;
+	margin-top: 24px;
 	color: rgba(255,255,255,0.5);
 	font-size: 0.8rem;
 	line-height: 1.5;
