@@ -24,6 +24,7 @@ const I18N_DICTIONARY = {
 		toast_start: 'Загрузка APK начнется сейчас...',
 		toast_android_hint: 'Если установка не началась — откройте папку «Загрузки» и нажмите на файл APK.',
 		modal_close: 'Закрыть',
+		footer_app_name: 'Футбольные прогнозы 2.0',
 		footer_rights: 'Все права защищены.',
 		footer_disclaimer: 'Приложение носит информационный характер и не является призывом к участию в азартных играх.'
 	},
@@ -43,6 +44,7 @@ const I18N_DICTIONARY = {
 		toast_start: 'APK download will start now...',
 		toast_android_hint: 'If installation didn\'t start — open Downloads and tap the APK file.',
 		modal_close: 'Close',
+		footer_app_name: 'Football Predictions 2.0',
 		footer_rights: 'All rights reserved.',
 		footer_disclaimer: 'The app is for informational purposes only and is not an invitation to participate in gambling.'
 	}
