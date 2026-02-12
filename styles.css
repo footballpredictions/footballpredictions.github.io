@@ -321,4 +321,8 @@ body {
 	.app-title { font-size: 3.2rem; line-height: 1.05; }
 }
 
-@media (max-width: 480px){ .app-title{ font-size: 3.2rem; line-height: 1.05; } }
+@media (max-width: 480px){
+	.app-title { font-size: 3.2rem; line-height: 1.05; }
+	.telegram-link { margin-bottom: 16px; }
+	.site-footer { padding-top: 16px; }
+}
