@@ -50,7 +50,7 @@ body {
 
 .container {
 	width: 100%;
-	flex: 1;
+	flex: 1 0 auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -323,6 +323,7 @@ body {
 
 @media (max-width: 480px){
 	.app-title { font-size: 3.2rem; line-height: 1.05; }
-	.telegram-link { margin-bottom: 16px; }
-	.site-footer { padding-top: 16px; }
+	.splash-screen { padding-bottom: 40px; }
+	.telegram-link { margin-bottom: 24px; }
+	.site-footer { padding-top: 24px; }
 }
