@@ -23,7 +23,9 @@ const I18N_DICTIONARY = {
 		toast_preparing: 'Идет подготовка загрузки...',
 		toast_start: 'Загрузка APK начнется сейчас...',
 		toast_android_hint: 'Если установка не началась — откройте папку «Загрузки» и нажмите на файл APK.',
-		modal_close: 'Закрыть'
+		modal_close: 'Закрыть',
+		footer_rights: 'Все права защищены.',
+		footer_disclaimer: 'Приложение носит информационный характер и не является призывом к участию в азартных играх.'
 	},
 	en: {
 		title: 'Football Predictions 2.0',
@@ -40,7 +42,9 @@ const I18N_DICTIONARY = {
 		toast_preparing: 'Preparing download...',
 		toast_start: 'APK download will start now...',
 		toast_android_hint: 'If installation didn\'t start — open Downloads and tap the APK file.',
-		modal_close: 'Close'
+		modal_close: 'Close',
+		footer_rights: 'All rights reserved.',
+		footer_disclaimer: 'The app is for informational purposes only and is not an invitation to participate in gambling.'
 	}
 };
 
@@ -406,6 +410,9 @@ function initPage() {
 		downloadBtn.__bound = true;
 	}
 
+	// Год в футере
+	var yearEl = document.querySelector('.footer-year');
+	if (yearEl) yearEl.textContent = new Date().getFullYear();
 	// Лёгкая защита буфера обмена: предупреждаем при копировании/вставке ссылок
 	setupClipboardGuards();
 }

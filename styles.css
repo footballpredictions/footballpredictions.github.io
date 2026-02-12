@@ -294,6 +294,22 @@ body {
 .feature-modal-body p:last-child { margin-bottom: 0; }
 .feature-modal-bullet { padding-left: 8px; }
 
+/* Футер */
+.site-footer {
+	position: relative;
+	z-index: 1;
+	text-align: center;
+	padding: 20px 16px;
+	color: rgba(255,255,255,0.5);
+	font-size: 0.8rem;
+	line-height: 1.5;
+}
+.site-footer p { margin: 4px 0; }
+.footer-disclaimer {
+	font-size: 0.7rem;
+	opacity: 0.7;
+}
+
 /* Портрет (мобильный): НЕ вращаем поле, показываем центральную область */
 @media (orientation: portrait){
 	.field-overlay { left: 0.5vmin; right: 0.5vmin; top: 50%; transform: translateY(-50%); }
