@@ -166,8 +166,9 @@ body {
 	border-radius: 50px;
 	border: 1px solid rgba(255, 255, 255, 0.4);
 	transition: background .3s ease, transform .3s ease, box-shadow .3s ease;
-	animation: slideInUp 1s ease-out 1.3s forwards;
+	animation: tgFadeIn 1s ease-out 1.3s both;
 }
+@keyframes tgFadeIn { from { opacity: 0; } to { opacity: 1; } }
 .telegram-link:hover {
 	background: rgba(0, 136, 204, 0.45);
 	transform: translateY(-3px);
