@@ -137,9 +137,9 @@ body {
 .app-info { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; animation: slideInUp 1s ease-out 1.2s both; }
 .feature { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; opacity: .9; transition: opacity .3s ease; min-width: 120px; }
 .feature:hover { opacity: 1; }
-.feature-btn { background: transparent; border: 1px solid rgba(255,255,255,0.35); border-radius: 16px; padding: 16px 20px; cursor: pointer; color: inherit; font-family: inherit; transition: all .25s ease; }
-.feature-btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.6); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-.feature-btn:active { transform: translateY(0); }
+.feature-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.3); border-radius: 16px; padding: 16px 20px; cursor: pointer; color: inherit; font-family: inherit; transition: all .25s ease; backdrop-filter: blur(4px); }
+.feature-btn:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.6); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+.feature-btn:active { transform: translateY(0); background: rgba(255,255,255,0.22); }
 /* Единый бокс 36x36 для выравнивания строк */
 .feature-icon { width: 36px; height: 36px; display: grid; place-items: center; line-height: 0; }
 /* Размеры содержимого */
