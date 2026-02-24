@@ -301,6 +301,11 @@ function showDownloadNotification(text) {
 function initFeatureModals() {
 	const modal = document.getElementById('featureModal');
 	if (!modal) return;
+	// Держим модалку напрямую в body, чтобы fixed-позиционирование
+	// не ломалось из-за transform у родительских контейнеров.
+	if (modal.parentNode !== document.body) {
+		document.body.appendChild(modal);
+	}
 	const titleEl = modal.querySelector('.feature-modal-title');
 	const bodyEl = modal.querySelector('.feature-modal-body');
 	const imagesEl = modal.querySelector('.feature-modal-images');
@@ -596,6 +601,13 @@ document.addEventListener('keydown', function(e) {
 
 // Параллакс заголовка при скролле
 window.addEventListener('scroll', function() {
+	if (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) {
+		return;
+	}
+	const modal = document.getElementById('featureModal');
+	if (modal && !modal.hasAttribute('hidden')) {
+		return;
+	}
 	const scrolled = window.pageYOffset;
 	const parallax = document.querySelector('.splash-screen');
 	const speed = scrolled * 0.5;
