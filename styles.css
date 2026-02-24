@@ -134,8 +134,8 @@ body {
 .download-icon { font-size: 1.5rem; }
 .version-info { margin-top: 16px; font-size: .9rem; opacity: .85; }
 
-.app-info { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; animation: slideInUp 1s ease-out 1.2s both; }
-.feature { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; opacity: .9; transition: opacity .3s ease; min-width: 120px; }
+.app-info { display: flex; justify-content: center; flex-wrap: wrap; animation: slideInUp 1s ease-out 1.2s both; margin: -12px; }
+.feature { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; opacity: .9; transition: opacity .3s ease; min-width: 120px; margin: 12px; }
 .feature:hover { opacity: 1; }
 .feature-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.3); border-radius: 16px; padding: 16px 20px; cursor: pointer; color: inherit; font-family: inherit; transition: all .25s ease; backdrop-filter: blur(4px); }
 .feature-btn:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.6); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
