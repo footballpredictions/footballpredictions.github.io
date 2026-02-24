@@ -373,14 +373,22 @@ function initFeatureModals() {
 		document.body.style.overflow = '';
 	}
 
-	document.querySelectorAll('.feature-btn').forEach((btn) => {
-		if (btn.__modalBound) return;
+	var featureButtons = document.querySelectorAll('.feature-btn');
+	for (var i = 0; i < featureButtons.length; i++) {
+		var btn = featureButtons[i];
+		if (btn.__modalBound) continue;
 		btn.__modalBound = true;
-		btn.addEventListener('click', () => {
-			const key = btn.getAttribute('data-feature');
+		btn.addEventListener('click', function (e) {
+			if (e) e.preventDefault();
+			var key = this.getAttribute('data-feature');
 			if (key) openModal(key);
 		});
-	});
+		btn.addEventListener('touchend', function (e) {
+			if (e) e.preventDefault();
+			var key = this.getAttribute('data-feature');
+			if (key) openModal(key);
+		});
+	}
 
 	if (closeBtn) closeBtn.addEventListener('click', closeModal);
 	if (backdrop) backdrop.addEventListener('click', closeModal);
