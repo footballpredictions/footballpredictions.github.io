@@ -334,6 +334,16 @@ function initFeatureModals() {
 	const imagesEl = modal.querySelector('.feature-modal-images');
 	const closeBtn = modal.querySelector('.feature-modal-close');
 	const backdrop = modal.querySelector('.feature-modal-backdrop');
+	let modalOpenedAt = 0;
+
+	function findFeatureButton(node) {
+		let current = node;
+		while (current && current !== document) {
+			if (current.classList && current.classList.contains('feature-btn')) return current;
+			current = current.parentNode;
+		}
+		return null;
+	}
 
 	function openModal(featureKey) {
 		const lang = getSavedLang();
@@ -364,34 +374,37 @@ function initFeatureModals() {
 			}
 		}
 		modal.removeAttribute('hidden');
+		modalOpenedAt = Date.now();
 		document.body.style.overflow = 'hidden';
 		if (closeBtn) closeBtn.setAttribute('aria-label', dict.modal_close || 'Close');
 	}
 
 	function closeModal() {
+		// На старых Android после touchend может прилетать "призрачный" click,
+		// который сразу закрывает только что открытую модалку.
+		if (Date.now() - modalOpenedAt < 350) return;
 		modal.setAttribute('hidden', '');
 		document.body.style.overflow = '';
 	}
 
-	var featureButtons = document.querySelectorAll('.feature-btn');
-	for (var i = 0; i < featureButtons.length; i++) {
-		var btn = featureButtons[i];
-		if (btn.__modalBound) continue;
-		btn.__modalBound = true;
-		btn.addEventListener('click', function (e) {
-			if (e) e.preventDefault();
-			var key = this.getAttribute('data-feature');
-			if (key) openModal(key);
-		});
-		btn.addEventListener('touchend', function (e) {
-			if (e) e.preventDefault();
-			var key = this.getAttribute('data-feature');
-			if (key) openModal(key);
-		});
+	function onFeatureTap(e) {
+		const btn = findFeatureButton(e.target);
+		if (!btn) return;
+		if (e) e.preventDefault();
+		const key = btn.getAttribute('data-feature');
+		if (key) openModal(key);
 	}
+	document.addEventListener('click', onFeatureTap, true);
+	document.addEventListener('touchend', onFeatureTap, true);
 
-	if (closeBtn) closeBtn.addEventListener('click', closeModal);
-	if (backdrop) backdrop.addEventListener('click', closeModal);
+	if (closeBtn) {
+		closeBtn.addEventListener('click', closeModal);
+		closeBtn.addEventListener('touchend', closeModal);
+	}
+	if (backdrop) {
+		backdrop.addEventListener('click', closeModal);
+		backdrop.addEventListener('touchend', closeModal);
+	}
 
 	document.addEventListener('keydown', (e) => {
 		if (e.key === 'Escape' && modal && !modal.hasAttribute('hidden')) closeModal();
