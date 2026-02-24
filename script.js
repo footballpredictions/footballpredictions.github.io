@@ -185,7 +185,7 @@ async function fetchLatestApkUrl() {
 		}
 		
 		const data = await res.json();
-		console.log('Release data received:', { tag_name: data.tag_name, name: data.name, assets_count: data.assets?.length });
+		console.log('Release data received:', { tag_name: data.tag_name, name: data.name, assets_count: data.assets ? data.assets.length : 0 });
 		
 		// Используем tag_name или name (заголовок релиза) для версии
 		const version = data.tag_name || data.name || '';
@@ -300,17 +300,18 @@ function showDownloadNotification(text) {
 // Модальные окна с описанием функций
 function initFeatureModals() {
 	const modal = document.getElementById('featureModal');
-	const titleEl = modal?.querySelector('.feature-modal-title');
-	const bodyEl = modal?.querySelector('.feature-modal-body');
-	const imagesEl = modal?.querySelector('.feature-modal-images');
-	const closeBtn = modal?.querySelector('.feature-modal-close');
-	const backdrop = modal?.querySelector('.feature-modal-backdrop');
+	if (!modal) return;
+	const titleEl = modal.querySelector('.feature-modal-title');
+	const bodyEl = modal.querySelector('.feature-modal-body');
+	const imagesEl = modal.querySelector('.feature-modal-images');
+	const closeBtn = modal.querySelector('.feature-modal-close');
+	const backdrop = modal.querySelector('.feature-modal-backdrop');
 
 	function openModal(featureKey) {
 		const lang = getSavedLang();
 		const dict = I18N_DICTIONARY[lang] || I18N_DICTIONARY.ru;
-		const title = dict.features?.[featureKey] || featureKey;
-		const desc = dict.feature_desc?.[featureKey] || '';
+		const title = (dict.features && dict.features[featureKey]) ? dict.features[featureKey] : featureKey;
+		const desc = (dict.feature_desc && dict.feature_desc[featureKey]) ? dict.feature_desc[featureKey] : '';
 		if (titleEl) titleEl.textContent = title;
 		if (bodyEl) {
 			bodyEl.innerHTML = desc.split('\n').map(p => {
@@ -323,7 +324,7 @@ function initFeatureModals() {
 		if (imagesEl) {
 			imagesEl.innerHTML = '';
 			// Добавьте картинки: FEATURE_IMAGES[featureKey] = ['url1.jpg', 'url2.jpg']
-			const imgs = window.FEATURE_IMAGES?.[featureKey];
+			const imgs = window.FEATURE_IMAGES && window.FEATURE_IMAGES[featureKey];
 			if (Array.isArray(imgs) && imgs.length) {
 				imgs.forEach(src => {
 					const img = document.createElement('img');
@@ -334,13 +335,13 @@ function initFeatureModals() {
 				});
 			}
 		}
-		modal?.removeAttribute('hidden');
+		modal.removeAttribute('hidden');
 		document.body.style.overflow = 'hidden';
 		if (closeBtn) closeBtn.setAttribute('aria-label', dict.modal_close || 'Close');
 	}
 
 	function closeModal() {
-		modal?.setAttribute('hidden', '');
+		modal.setAttribute('hidden', '');
 		document.body.style.overflow = '';
 	}
 
@@ -353,8 +354,8 @@ function initFeatureModals() {
 		});
 	});
 
-	closeBtn?.addEventListener('click', closeModal);
-	backdrop?.addEventListener('click', closeModal);
+	if (closeBtn) closeBtn.addEventListener('click', closeModal);
+	if (backdrop) backdrop.addEventListener('click', closeModal);
 
 	document.addEventListener('keydown', (e) => {
 		if (e.key === 'Escape' && modal && !modal.hasAttribute('hidden')) closeModal();
