@@ -166,67 +166,90 @@ function triggerDirectDownload(url) {
 }
 
 // Получение последнего релиза и ссылки на APK
-async function fetchLatestApkUrl() {
+function fetchLatestApkUrl() {
 	try {
 		// Добавляем timestamp для обхода кеша
 		const cacheBuster = '?_=' + Date.now();
 		const apiUrl = 'https://api.github.com/repos/footballpredictions/footballpredictions.github.io/releases/latest' + cacheBuster;
 		console.log('Fetching latest release from:', apiUrl);
-		
-		const res = await fetch(apiUrl, {
-			headers: { 
+
+		if (typeof fetch !== 'function') {
+			return Promise.resolve(null);
+		}
+
+		return fetch(apiUrl, {
+			headers: {
 				'Accept': 'application/vnd.github+json'
 			},
 			cache: 'no-store'
-		});
-		
-		if (!res.ok) {
-			throw new Error(`Failed to fetch latest release: ${res.status} ${res.statusText}`);
-		}
-		
-		const data = await res.json();
-		console.log('Release data received:', { tag_name: data.tag_name, name: data.name, assets_count: data.assets ? data.assets.length : 0 });
-		
-		// Используем tag_name или name (заголовок релиза) для версии
-		const version = data.tag_name || data.name || '';
-		if (version) {
-			window.__latestVersionTag = version;
-			updateVersionLabel(version);
-		} else {
-			console.warn('No version found in release data');
-		}
-		
-		// Ищем asset c расширением .apk
-		const apkAsset = Array.isArray(data.assets) ? data.assets.find(a => typeof a.browser_download_url === 'string' && a.browser_download_url.toLowerCase().endsWith('.apk')) : null;
-		if (apkAsset && apkAsset.browser_download_url) {
-			window.__latestApkUrl = apkAsset.browser_download_url;
-			console.log('APK URL found:', window.__latestApkUrl);
-			return window.__latestApkUrl;
-		} else {
-			console.warn('APK asset not found in release');
-		}
-		
-		return null;
+		})
+			.then(function (res) {
+				if (!res.ok) {
+					throw new Error('Failed to fetch latest release: ' + res.status + ' ' + res.statusText);
+				}
+				return res.json();
+			})
+			.then(function (data) {
+				console.log('Release data received:', { tag_name: data.tag_name, name: data.name, assets_count: data.assets ? data.assets.length : 0 });
+
+				// Используем tag_name или name (заголовок релиза) для версии
+				const version = data.tag_name || data.name || '';
+				if (version) {
+					window.__latestVersionTag = version;
+					updateVersionLabel(version);
+				} else {
+					console.warn('No version found in release data');
+				}
+
+				// Ищем asset c расширением .apk
+				const apkAsset = Array.isArray(data.assets) ? data.assets.find(function (a) {
+					return typeof a.browser_download_url === 'string' && a.browser_download_url.toLowerCase().endsWith('.apk');
+				}) : null;
+
+				if (apkAsset && apkAsset.browser_download_url) {
+					window.__latestApkUrl = apkAsset.browser_download_url;
+					console.log('APK URL found:', window.__latestApkUrl);
+					return window.__latestApkUrl;
+				}
+
+				console.warn('APK asset not found in release');
+				return null;
+			})
+			.catch(function (e) {
+				console.error('Failed to fetch latest release:', e);
+				return null;
+			});
 	} catch (e) {
 		console.error('Failed to fetch latest release:', e);
-		return null;
+		return Promise.resolve(null);
 	}
 }
 
 // Версия с того же сайта (нет CORS) — работает на старых устройствах. При релизе обновить только version.json.
-async function fetchVersionFromSameOrigin() {
+function fetchVersionFromSameOrigin() {
 	try {
-		var res = await fetch('/version.json?t=' + Date.now(), { cache: 'no-store' });
-		if (!res.ok) return null;
-		var data = await res.json();
-		var version = (data && data.version) ? String(data.version).trim() : '';
-		if (!version) return null;
-		window.__latestVersionTag = version.indexOf('v') === 0 ? version : 'v' + version;
-		updateVersionLabel(window.__latestVersionTag);
-		window.__latestApkUrl = getFallbackApkUrl();
-		return window.__latestApkUrl;
+		if (typeof fetch !== 'function') {
+			return Promise.resolve(null);
+		}
+		return fetch('/version.json?t=' + Date.now(), { cache: 'no-store' })
+			.then(function (res) {
+				if (!res.ok) return null;
+				return res.json();
+			})
+			.then(function (data) {
+				if (!data) return null;
+				var version = (data && data.version) ? String(data.version).trim() : '';
+				if (!version) return null;
+				window.__latestVersionTag = version.indexOf('v') === 0 ? version : 'v' + version;
+				updateVersionLabel(window.__latestVersionTag);
+				window.__latestApkUrl = getFallbackApkUrl();
+				return window.__latestApkUrl;
+			})
+			.catch(function () {
+				return null;
+			});
 	} catch (e) {
-		return null;
+		return Promise.resolve(null);
 	}
 }
 
