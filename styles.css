@@ -300,6 +300,7 @@ body {
 	grid-template-columns: repeat(2, minmax(120px, 1fr));
 	gap: 12px;
 	justify-items: center;
+	padding-top: 4px;
 }
 .feature-submenu-btn {
 	min-width: 120px;
