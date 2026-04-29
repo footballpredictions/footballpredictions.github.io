@@ -297,39 +297,17 @@ body {
 }
 .feature-submenu-grid {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(110px, 1fr));
+	grid-template-columns: repeat(2, minmax(120px, 1fr));
 	gap: 12px;
+	justify-items: center;
 }
 .feature-submenu-btn {
-	background: rgba(255,255,255,0.1);
-	border: 1px solid rgba(255,255,255,0.35);
-	border-radius: 16px;
-	padding: 16px 20px;
-	width: 120px;
-	height: 120px;
-	color: #fff;
-	font-family: inherit;
+	min-width: 120px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	gap: 8px;
-	cursor: pointer;
-	justify-self: center;
-	transition: all .25s ease;
-	backdrop-filter: blur(4px);
-	-webkit-backdrop-filter: blur(4px);
-	will-change: transform;
-}
-.feature-submenu-btn:hover {
-	background: rgba(255,255,255,0.18);
-	border-color: rgba(255,255,255,0.6);
-	transform: translateY(-2px);
-	box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-}
-.feature-submenu-btn:active {
-	transform: translateY(0);
-	background: rgba(255,255,255,0.22);
 }
 .feature-submenu-btn span:last-child {
 	font-size: 0.95rem;
@@ -356,10 +334,6 @@ body {
 	}
 	.feature-submenu-grid {
 		grid-template-columns: 1fr;
-	}
-	.feature-submenu-btn {
-		width: 120px;
-		height: 120px;
 	}
 }
 .feature-modal-body p { margin-bottom: 12px; }
