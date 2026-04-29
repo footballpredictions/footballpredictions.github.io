@@ -17,7 +17,7 @@ const I18N_DICTIONARY = {
 		feature_desc: {
 			predictions: 'Главный экран приложения. Здесь отображаются актуальные прогнозы на футбольные матчи: дата, время, лига, команды и рекомендуемый исход. Можно обновить список свайпом вниз. Часть прогнозов доступна бесплатно, полный доступ — по подписке.',
 			statistics: 'Две вкладки:\n\n• Статистика 3-x (бесплатная) — результаты прогнозов за последний месяц, 3 месяца и за всё время: выигрыши, проигрыши, возвраты, процент побед.\n\n• Статистика $ (платная, появится при подключенной подписке) — расширенная статистика для подписчиков по платным прогнозам.',
-			top10: 'Это меню если вы хотите сами делать анализ матча, просто выбирете нужную страну, сезон, лигу и две команды и получите полную по ним статистику.',
+			top10: 'Специальные списки, составленные нашим алгоритмом: Тотал больше 2.5, Обе забьют, Победы, Тотал Угловых, Тотал Жёлтых карточек, Тотал Фолов. Помогают найти матчи на сегодня под конкретные события.',
 			onevs2: 'Это меню если вы хотите сами делать анализ матча, просто выбирете нужную страну, сезон, лигу и две команды и получите полную по ним статистику.',
 			bankroll: 'Банкролл создан для учёта событий и контроля дохода и расхода (находится в профиле).\n\nСначала установите банк — введите сумму вашего банкролла (например, 10 000 ₽) и нажмите «Сохранить». Затем добавляйте событие: матч (например, Арсенал — Челси), прогноз (например, П1), сумму из банкролла на матч (например, 500 ₽) и коэффициент (например, 1,6). По окончании матча нажмите «Установить результат», выберите исход (выигрыш, проигрыш или возврат) и сохраните — программа рассчитает и сохранит ваш доход или расход, процент выигрыша, общую прибыль и ROI.\n\nROI (Return on Investment) — это доходность в процентах: сколько вы заработали или потеряли относительно всех поставленных денег. Например, ROI +15% значит, что на каждые 100 ₽ вы в среднем получили 15 ₽ прибыли.'
 		},
@@ -38,7 +38,7 @@ const I18N_DICTIONARY = {
 		feature_desc: {
 			predictions: 'Main app screen. Displays current football match predictions: date, time, league, teams and recommended outcome. Pull down to refresh. Some predictions are free, full access — by subscription.',
 			statistics: 'Two tabs:\n\n• Stats 3-x (free) — prediction results for the last month, 3 months and all time: wins, losses, returns, win rate.\n\n• Stats $ (paid, appears with subscription) — extended statistics for subscribers on paid predictions.',
-			top10: 'This menu is for manual match analysis. Select country, season, league, and two teams to get full statistics for them.',
+			top10: 'Special lists compiled by our algorithm: Total over 2.5, Both to Score, Wins, Total Corners, Total Yellow Cards, Total Fouls. Helps find today\'s matches for specific events.',
 			onevs2: 'This menu is for manual match analysis. Select country, season, league, and two teams to get full statistics for them.',
 			bankroll: 'Bankroll is created to track your events and control profit and loss (located in your profile).\n\nFirst set your bank — enter your bankroll amount (for example, 10,000 RUB) and tap \"Save\". Then add an event: match (for example, Arsenal vs Chelsea), prediction (for example, Home Win), amount taken from the bankroll for this match (for example, 500 RUB) and odds (for example, 1.6). When the match ends, tap \"Set result\", choose the outcome (win, loss or push) and save — the app will calculate and store your profit or loss, win rate, total profit and ROI.\n\nROI (Return on Investment) is your profitability in percent: how much you have earned or lost relative to all money staked. For example, ROI +15% means that for every 100 RUB staked you gained 15 RUB profit on average.'
 		},
@@ -278,11 +278,22 @@ function updateVersionLabel(version) {
 	const numberEl = el.querySelector('.version-number');
 	if (prefixEl && numberEl) {
 		numberEl.textContent = cleanVersion;
+		try { localStorage.setItem('lastKnownVersion', cleanVersion); } catch (_) {}
 		console.log('Version updated to:', cleanVersion);
 	} else {
 		el.textContent = cleanVersion;
+		try { localStorage.setItem('lastKnownVersion', cleanVersion); } catch (_) {}
 		console.log('Version updated to (fallback):', cleanVersion);
 	}
+}
+
+function applyCachedVersionLabel() {
+	try {
+		const cached = localStorage.getItem('lastKnownVersion');
+		if (cached && cached.trim()) {
+			updateVersionLabel(cached.trim());
+		}
+	} catch (_) {}
 }
 
 // Показ уведомления о скачивании
@@ -469,6 +480,9 @@ function initFeatureModals() {
 // Дополнительные эффекты при загрузке страницы
 // (Удалены летающие элементы)
 function initPage() {
+	// Сразу показываем последнюю удачно полученную версию (если есть),
+	// чтобы не мигало старое значение при медленном интернете.
+	applyCachedVersionLabel();
 	// Приоритетно загружаем актуальную версию, чтобы сразу показать ее пользователю
 	// Небольшая задержка для гарантии готовности DOM
 	setTimeout(() => {
