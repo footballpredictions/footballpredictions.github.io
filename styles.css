@@ -303,10 +303,10 @@ body {
 .feature-submenu-btn {
 	background: rgba(255,255,255,0.1);
 	border: 1px solid rgba(255,255,255,0.35);
-	border-radius: 14px;
-	padding: 14px 10px;
-	aspect-ratio: 1 / 1;
-	min-height: 110px;
+	border-radius: 16px;
+	padding: 16px 20px;
+	width: 120px;
+	height: 120px;
 	color: #fff;
 	font-family: inherit;
 	display: flex;
@@ -315,6 +315,7 @@ body {
 	align-items: center;
 	gap: 8px;
 	cursor: pointer;
+	justify-self: center;
 }
 .feature-submenu-btn:active {
 	background: rgba(255,255,255,0.22);
@@ -344,6 +345,10 @@ body {
 	}
 	.feature-submenu-grid {
 		grid-template-columns: 1fr;
+	}
+	.feature-submenu-btn {
+		width: 120px;
+		height: 120px;
 	}
 }
 .feature-modal-body p { margin-bottom: 12px; }
