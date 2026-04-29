@@ -404,7 +404,7 @@ function initFeatureModals() {
 				<button type="button" class="feature-submenu-btn" data-subfeature="top10">
 					<span class="feature-icon feature-icon--small" aria-hidden="true">
 						<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF">
-							<path d="M16,11c1.66,0 2.99,-1.34 2.99,-3S17.66,5 16,5c-1.66,0 -3,1.34 -3,3s1.34,3 3,3zM8,11c1.66,0 2.99,-1.34 2.99,-3S9.66,5 8,5C6.34,5 5,6.34 5,8s1.34,3 3,3zM8,13c-2.33,0 -7,1.17 -7,3.5L1,19h14v-2.5c0,-2.33 -4.67,-3.5 -7,-3.5zM16,13c-0.29,0 -0.62,0.02 -0.97,0.05 1.16,0.84 1.97,1.97 1.97,3.45L17,19h6v-2.5c0,-2.33 -4.67,-3.5 -7,-3.5z"/>
+							<path d="M3 12h4v9H3v-9zm14-9h4v18h-4V3zM10 7h4v14h-4V7z"/>
 						</svg>
 					</span>
 					<span>${dict.features && dict.features.top10 ? dict.features.top10 : 'Top 10'}</span>
@@ -412,7 +412,7 @@ function initFeatureModals() {
 				<button type="button" class="feature-submenu-btn" data-subfeature="onevs2">
 					<span class="feature-icon feature-icon--small" aria-hidden="true">
 						<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF">
-							<path d="M3 12h4v9H3v-9zm14-9h4v18h-4V3zM10 7h4v14h-4V7z"/>
+							<path d="M16,11c1.66,0 2.99,-1.34 2.99,-3S17.66,5 16,5c-1.66,0 -3,1.34 -3,3s1.34,3 3,3zM8,11c1.66,0 2.99,-1.34 2.99,-3S9.66,5 8,5C6.34,5 5,6.34 5,8s1.34,3 3,3zM8,13c-2.33,0 -7,1.17 -7,3.5L1,19h14v-2.5c0,-2.33 -4.67,-3.5 -7,-3.5zM16,13c-0.29,0 -0.62,0.02 -0.97,0.05 1.16,0.84 1.97,1.97 1.97,3.45L17,19h6v-2.5c0,-2.33 -4.67,-3.5 -7,-3.5z"/>
 						</svg>
 					</span>
 					<span>${dict.features && dict.features.onevs2 ? dict.features.onevs2 : '1vs2'}</span>
