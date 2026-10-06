@@ -295,24 +295,6 @@ body {
 	font-size: 0.95rem;
 	line-height: 1.6;
 }
-.feature-submenu-grid {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(120px, 1fr));
-	gap: 12px;
-	justify-items: center;
-	padding-top: 4px;
-}
-.feature-submenu-btn {
-	min-width: 120px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 8px;
-}
-.feature-submenu-btn span:last-child {
-	font-size: 0.95rem;
-}
 @media (max-width: 480px) {
 	.feature-modal-row {
 		flex-direction: column;
@@ -332,9 +314,6 @@ body {
 	}
 	.feature-modal-img {
 		max-height: min(220px, 40vh);
-	}
-	.feature-submenu-grid {
-		grid-template-columns: 1fr;
 	}
 }
 .feature-modal-body p { margin-bottom: 12px; }
